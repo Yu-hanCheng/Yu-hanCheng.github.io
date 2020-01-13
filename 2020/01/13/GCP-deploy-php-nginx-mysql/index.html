@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>GCP_deploy_php_nginx_mysql | Vegelephant&#39;s IT world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[GCP] 部署 Nginx server 之 Laravel 專案tags:GCP, Deployment, Nginx, Laravel6事前 在自己電腦上安裝 gcloud sdk macOS : brew cask install google-cloud-sdk Ubuntu Windows    gcloud init  gcloud auth login 查看 project gcl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCP_deploy_php_nginx_mysql">
+<meta property="og:url" content="http://yoursite.com/2020/01/13/GCP-deploy-php-nginx-mysql/index.html">
+<meta property="og:site_name" content="Vegelephant&#39;s IT world">
+<meta property="og:description" content="[GCP] 部署 Nginx server 之 Laravel 專案tags:GCP, Deployment, Nginx, Laravel6事前 在自己電腦上安裝 gcloud sdk macOS : brew cask install google-cloud-sdk Ubuntu Windows    gcloud init  gcloud auth login 查看 project gcl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/qO078qH.png">
+<meta property="og:image" content="https://i.imgur.com/EajSnwX.png">
+<meta property="og:image" content="https://i.imgur.com/9wEkfqw.png">
+<meta property="article:published_time" content="2020-01-13T02:41:00.000Z">
+<meta property="article:modified_time" content="2020-01-13T02:41:12.931Z">
+<meta property="article:author" content="SarahCheng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/qO078qH.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Vegelephant&#39;s IT world" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Vegelephant&#39;s IT world</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-GCP-deploy-php-nginx-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/13/GCP-deploy-php-nginx-mysql/" class="article-date">
+  <time datetime="2020-01-13T02:41:00.000Z" itemprop="datePublished">2020-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GCP_deploy_php_nginx_mysql
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="GCP-部署-Nginx-server-之-Laravel-專案"><a href="#GCP-部署-Nginx-server-之-Laravel-專案" class="headerlink" title="[GCP] 部署 Nginx server 之 Laravel 專案"></a>[GCP] 部署 Nginx server 之 Laravel 專案</h1><h6 id="tags-GCP-Deployment-Nginx-Laravel6"><a href="#tags-GCP-Deployment-Nginx-Laravel6" class="headerlink" title="tags:GCP, Deployment, Nginx, Laravel6"></a>tags:<code>GCP</code>, <code>Deployment</code>, <code>Nginx</code>, <code>Laravel6</code></h6><h1 id="事前"><a href="#事前" class="headerlink" title="事前"></a>事前</h1><ol>
+<li>在自己電腦上安裝 gcloud sdk<ul>
+<li><a href="https://formulae.brew.sh/cask/google-cloud-sdk" target="_blank" rel="noopener">macOS</a> : <code>brew cask install google-cloud-sdk</code></li>
+<li><a href="https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu?hl=zh-tw" target="_blank" rel="noopener">Ubuntu</a></li>
+<li><a href="https://cloud.google.com/sdk/docs/quickstart-windows?hl=zh-tw" target="_blank" rel="noopener">Windows</a> </li>
+</ul>
+</li>
+<li><code>gcloud init</code> </li>
+<li><code>gcloud auth login</code></li>
+<li>查看 project <code>gcloud config list project</code><br>（<code>gcloud projects create</code>==PROJECT_ID==）</li>
+</ol>
+<h1 id="Step-1-建立執行個體"><a href="#Step-1-建立執行個體" class="headerlink" title="Step 1 建立執行個體"></a>Step 1 建立執行個體</h1><ol>
+<li><p><code>gcloud compute instances create test1023 --zone asia-east1-b --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts</code> </p>
+<blockquote>
+<p>一定要這兩個參數：<code>--image-project</code> ,  <code>--image-family</code></p>
+</blockquote>
+<ul>
+<li>若全都用預設，就只要下指令: <code>gcloud compute instances create test1023</code>即可</li>
+<li>查看<a href="https://cloud.google.com/compute/docs/images?hl=zh-tw" target="_blank" rel="noopener">可用映像檔</a><br>查詢：<code>gcloud compute images list</code></li>
+<li>查看<a href="https://cloud.google.com/compute/docs/regions-zones/?hl=zh-tw#available" target="_blank" rel="noopener">可用區域</a><br>查詢：<code>gcloud compute zones list</code></li>
+<li>查詢目前VM個體：<code>gcloud compute instances list</code></li>
+</ul>
+</li>
+<li><p>進入 <code>gcloud compute ssh &quot;test1023&quot;</code><br>(<code>gcloud compute ssh --zone &quot;asia-east1-b&quot; &quot;test1023&quot;</code>)</p>
+</li>
+<li><p>Enter passphrase for key ‘/Users/sarahcheng/.ssh/google_compute_engine’: 輸入SSH 鑰匙密碼</p>
+</li>
+<li><p>開瀏覽器到 <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">gcloud console</a> 將防火牆打開<br><img src="https://i.imgur.com/qO078qH.png" alt=""></p>
+</li>
+</ol>
+<p>:::danger<br>如果要刪除 <code>gcloud compute instances delete test1023</code><br>:::</p>
+<h1 id="Step-2-安裝所需套件"><a href="#Step-2-安裝所需套件" class="headerlink" title="Step 2 安裝所需套件"></a>Step 2 安裝所需套件</h1><ul>
+<li>看作業系統： 指令<code>lsb_release -a</code>  及 <code>cat /etc/*release</code><h2 id="2-1-安裝-php"><a href="#2-1-安裝-php" class="headerlink" title="2-1 安裝 php"></a>2-1 安裝 php</h2></li>
+</ul>
+<ol>
+<li>看 php 版本：<code>php -v</code>，更新到 7.3 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install software-properties-common</span><br><span class="line">sudo add-apt-repository ppa:ondrej&#x2F;php</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y php7.3</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>sudo apt-get install php-mbstring php-gd php-xml zip</code>   // 同時安裝 php-mbstring、php-gd、php-xml、zip</li>
+<li>再看一次確認安裝成功 <code>php -v</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="2-2-安裝-composer"><a href="#2-2-安裝-composer" class="headerlink" title="2-2 安裝 composer"></a>2-2 安裝 composer</h2><ul>
+<li>安裝指令：<code>curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer</code></li>
+<li>查看是否安裝成功：<code>composer -V</code><h2 id="2-3-安裝-mysql"><a href="#2-3-安裝-mysql" class="headerlink" title="2-3 安裝 mysql"></a>2-3 <a href="https://blog.johnsonlu.org/install-mysql-on-ubuntu/" target="_blank" rel="noopener">安裝 mysql</a></h2></li>
+</ul>
+<ol>
+<li><p><code>sudo apt-get install mysql-server</code></p>
+<blockquote>
+<p>若要安裝特定版本<code>sudo apt-get install mysql-server-5.7</code><br> 若要設密碼：<code>$sudo mysql_secure_installation</code></p>
+</blockquote>
+</li>
+<li><p>啟動 mysql-server:<br> <code>sudo systemctl start mysql</code></p>
+</li>
+<li><p>查看是否成功啟動：<br> <code>systemctl |grep  mysql</code></p>
+</li>
+<li><p>進入 mysql server:<br> <code>sudo mysql -u root</code><br> 更改有權限或要修改的使用者本身已登入 mysql 的密碼<br> <code>mysql&gt; SET PASSWORD FOR &#39;目標使用者&#39;@&#39;主機&#39; = PASSWORD(&#39;密碼&#39;);</code></p>
+<blockquote>
+<p>查看目前使用者及其身份驗證方式：<br><code>SELECT User, Host, plugin FROM mysql.user;</code></p>
+</blockquote>
+<ol>
+<li><code>CREATE USER &#39;sarah&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;00000&#39;;</code></li>
+<li>給予新建的使用者存取DB的權限：<br><code>GRANT ALL PRIVILEGES ON *.* TO &#39;sarah&#39;@&#39;localhost&#39;;</code><br>(＊.＊ 代表所有DB的所有 table)</li>
+<li>查看目前 mysql server的使用者：<br><code>select user,plugin,authentication_string from mysql.user;</code> </li>
+</ol>
+</li>
+</ol>
+<h2 id="2-4-安裝-Nginx"><a href="#2-4-安裝-Nginx" class="headerlink" title="2-4 安裝 Nginx"></a>2-4 安裝 Nginx</h2><ol>
+<li>查看Port 80 是否被佔用：<code>sudo netstat -utlnp | grep 80</code><br> (參數意義 udp, tcp, listen, numeric, process)<blockquote>
+<p>numeric 的意思是將名稱數字化(IP)，例：原本的 localhost 會變成 127.0.0.1 </p>
+</blockquote>
+</li>
+<li>Ubuntu 的映像檔已內建 Apache2，預設是開啟聽著 80 port， 查看 apache2 狀態：<code>sudo systemctl status apache2</code></li>
+<li>我們要改用 Nginx, 但是因為安裝 Nginx 後它也會自動聽 80 port，所以先把 apache2 停掉：<code>sudo systemctl stop apache2</code></li>
+<li>安裝 Nginx：<code>sudo apt-get install nginx -y</code></li>
+<li>安裝 Nginx 與 PHP溝通之套件 <code>sudo apt-get install php7.3-fpm</code></li>
+</ol>
+<h2 id="2-5-安裝-git"><a href="#2-5-安裝-git" class="headerlink" title="2-5 安裝 git"></a>2-5 安裝 git</h2><ol>
+<li><code>sudo apt-get update</code></li>
+<li><code>sudo apt-get upgrade</code></li>
+<li><code>sudo apt-get install git</code></li>
+</ol>
+<h1 id="Step-3-部署-github-專案"><a href="#Step-3-部署-github-專案" class="headerlink" title="Step 3 部署 github 專案"></a>Step 3 部署 github 專案</h1><h2 id="3-1-專案下載"><a href="#3-1-專案下載" class="headerlink" title="3-1 專案下載"></a>3-1 專案下載</h2><ul>
+<li><code>git clone https://github.com/laravel/laravel.git</code><h2 id="3-2-Nginx-設定"><a href="#3-2-Nginx-設定" class="headerlink" title="3-2 Nginx 設定"></a>3-2 Nginx 設定</h2></li>
+</ul>
+<ol>
+<li>修改 Nginx 設定檔中的讀取路徑為我們要部署的專案<br><code>sudo vim /etc/nginx/sites-available/default</code>   <ul>
+<li>將專案路徑＋/public 寫在 root 後 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#root &#x2F;var&#x2F;www&#x2F;html;</span><br><span class="line">root &#x2F;home&#x2F;sarahcheng&#x2F;laravel&#x2F;public;</span><br><span class="line"># 加入 index.php</span><br><span class="line">index index.php;</span><br></pre></td></tr></table></figure>
+如圖：<img src="https://i.imgur.com/EajSnwX.png" alt=""></li>
+<li>location 改成<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location &#x2F; &#123;</span><br><span class="line">  try_files $uri $uri&#x2F; &#x2F;index.php?$query_string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>拿掉 php 那段的註解，套件改 7.3 版本，<code>php7.3-fpm.sock;</code><br><img src="https://i.imgur.com/9wEkfqw.png" alt=""></li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li>讓 niginx 重新載入修改完的設定檔：<br> <code>sudo nginx -s reload</code><br>PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target="_blank" rel="noopener">參考連結</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx: [error] open() &quot;&#x2F;run&#x2F;nginx.pid&quot; failed (2: No such file or directory)</span><br><span class="line">&#x2F;&#x2F; 可輸入下列指令</span><br><span class="line">$ sudo nginx</span><br><span class="line">&#x2F;&#x2F; 執行該指令之後，會在 &#x2F;usr&#x2F;local&#x2F;var&#x2F;run&#x2F; 路徑下，創建一個名爲 nginx.pid 的文件 )</span><br></pre></td></tr></table></figure></li>
+<li>進入專案安裝套件和設定環境：<br> <code>cd laravel</code><ol>
+<li><code>sudo composer install</code></li>
+<li><code>mv .env.example .env</code></li>
+<li>產生 access key：<br> <code>sudo php artisan key:generate</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="3-3-資料庫-Operation"><a href="#3-3-資料庫-Operation" class="headerlink" title="3-3 資料庫 Operation"></a>3-3 資料庫 Operation</h2><ol>
+<li>進入 <code>mysql -u sarah -p00000</code><ul>
+<li><code>CREATE DATABASE testdb;</code></li>
+<li><code>show databases;</code></li>
+<li><code>use testdb;</code></li>
+<li><code>show tables;</code> (現在是空的)</li>
+</ul>
+</li>
+<li>另外開一個 ssh 連線過去<ol>
+<li><code>sudo apt-get install php7.3-mysql</code></li>
+<li>進到專案目錄下：<code>cd laravel</code></li>
+<li>修改專案的環境設定 .env 檔： <code>vim .env</code>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DB_CONNECTION&#x3D;mysql</span><br><span class="line">DB_HOST&#x3D;127.0.0.1</span><br><span class="line">DB_PORT&#x3D;3306</span><br><span class="line">DB_DATABASE&#x3D;testdb</span><br><span class="line">DB_USERNAME&#x3D;sarah</span><br><span class="line">DB_PASSWORD&#x3D;00000</span><br></pre></td></tr></table></figure></li>
+<li>執行指令建立 tabel: <code>php artisan migrate</code> (原本git clone 下來的專案就有寫好的 migration了)</li>
+</ol>
+</li>
+<li>回到 mysql  <ul>
+<li><code>show tables;</code> (現在多了三個 table)</li>
+<li>離開 mysql <code>exit</code><h2 id="3-4-更改權限"><a href="#3-4-更改權限" class="headerlink" title="3-4 更改權限"></a>3-4 更改權限</h2>在專案目錄下：</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>先到專案路徑下看擁有者 <code>ls -al</code> </p>
+</li>
+<li><p>修改擁有群組為 www-data<br>  <code>sudo chown -R sarahcheng.www-data .</code></p>
+<ul>
+<li>“chown” change 擁有者</li>
+<li>“-R” 往下層所有目錄遞迴 </li>
+<li>“sarahcheng.www-data” 擁有者.擁有群組</li>
+<li>“.” 代表當前目錄</li>
+</ul>
+</li>
+<li><p><code>sudo chmod -R 2770 ./storage/</code></p>
+<ul>
+<li><p>“chmod” change mode</p>
+</li>
+<li><p>“-R” 往下層所有目錄遞迴 </p>
+</li>
+<li><p>“2770” 2代表 SGID <a href="http://www.vixual.net/blog/archives/224" target="_blank" rel="noopener">參考</a></p>
+<ul>
+<li>770分別代表：<ul>
+<li>擁有者的存取權限</li>
+<li>擁有群組的存取權限</li>
+<li>其他人的存取權限</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>“.” 代表當前目錄</p>
+<p>到專案路徑下看擁有者是否更改成功 <code>ls -al</code> </p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="P-S"><a href="#P-S" class="headerlink" title="P.S."></a>P.S.</h1><ul>
+<li><p>GCP instance 的 IP，可在 GCP GUI 複製 <code>外部 IP</code>。</p>
+</li>
+<li><p>將舊資料備份 <code>mysqldump --opt -usarahcheng -p laravel_shop &gt; test.sql</code></p>
+</li>
+<li><p>或這樣備份 <code>mysqldump -u 使用者名稱 -p 要匯出的資料 &gt; 匯出後要叫的檔名.sql</code></p>
+</li>
+<li><p>透過 ssh 將檔案傳到 GCE instance <code>gcloud compute scp test.sql test1023: --zone asia-east1-b</code></p>
+</li>
+<li><p>查看目前機器中所有開放的 Port</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo netstat -utlnp</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>基本上不用安裝<a href="https://laravel.com/docs/6.x/installation" target="_blank" rel="noopener">laravel</a>(不太可能在server上開發)，不過還是提供參考指令：<br>  :::success</p>
+<ol>
+<li><p><code>sudo apt-get install php7.3-zip</code></p>
+</li>
+<li><p><code>sudo composer global require laravel/installer</code></p>
+</li>
+<li><p><code>vi ~/.bash_profile</code></p>
+<ul>
+<li><code>export PATH=&quot;$HOME/.composer/vendor/bin:$PATH&quot;</code></li>
+</ul>
+</li>
+<li><p>`source ~/.bash_profile</p>
+</li>
+<li><p><code>laravel -V</code></p>
+<p>:::</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>Machine type <code>f1-micro</code> 只有 600M 的記憶體，但 Composer <a href="https://www.reddit.com/r/PHP/comments/2j15ff/making_composer_use_less_ram/cl7kk4t/" target="_blank" rel="noopener">據說</a> 會用到 512M 以上，目前聽到的方案：</p>
+<ol>
+<li>直接開足夠規格的機器：n1-standard-1 以上 (3.7G 記憶體)</li>
+<li>在需要 Composer 時才擴增記憶體，但機器需要進關機狀態</li>
+<li>本地建置完，再傳到機器內</li>
+</ol>
+</li>
+<li><p>[記錄] 把整個資料夾都修改權限 <code>sudo chmod -R 2770 .</code>，解決了 502 錯誤</p>
+</li>
+<li><p>[記錄] 後來卡在 404</p>
+<ul>
+<li>如果是放在 /var/www/larave/public 可以運作</li>
+<li>需要 <code>sudo chmod 777 -R ./storage/</code> (<a href="https://laracasts.com/discuss/channels/laravel/permission-denied-for-laravel-storage-logs?reply=483075" target="_blank" rel="noopener">來源</a>)，但似乎是有點危險的權限 (?)</li>
+</ul>
+</li>
+</ul>
+<h2 id="複製資料庫資料"><a href="#複製資料庫資料" class="headerlink" title="複製資料庫資料"></a>複製資料庫資料</h2><p>本地備份資料：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p 資料庫名 &gt; 備份的檔案名稱.sql</span><br></pre></td></tr></table></figure>
+<p>複製到instance上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gcloud compute scp 備份的檔案名稱.sql instance名:&#x2F;home&#x2F;使用者名稱</span><br></pre></td></tr></table></figure>
+
+<p>instance上的mysql 建立database後，匯入資料</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p 資料庫名 &lt; 備份的檔案名稱.sql</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="加入新-ssh-使用者"><a href="#加入新-ssh-使用者" class="headerlink" title="加入新 ssh 使用者"></a>加入新 ssh 使用者</h2><ol>
+<li>在 Instance 加入你的公鑰，(GCP console)。</li>
+<li>注意：登入的帳號，就是公鑰最後面顯示的名稱</li>
+<li>用 ssh 指令連線。</li>
+</ol>
+<p><code>$ ssh  name@my_instance_ip</code><br>(預設抓 ~/.ssh/id_rsa )</p>
+<p>比如說</p>
+<p><code>$ ssh louis@35.XX.230.OO</code></p>
+<p>如果要指定用特定哪一組公私鑰，可加上 <code>-i</code><br><code>$ ssh  -i  specified_private_key  name@my_instance_ip (edited)</code></p>
+<h2 id="Apache2-是在裝-php7-3-時的相依套件"><a href="#Apache2-是在裝-php7-3-時的相依套件" class="headerlink" title="Apache2 是在裝 php7.3 時的相依套件"></a>Apache2 是在裝 php7.3 時的相依套件</h2><blockquote>
+<p>$ sudo apt-get install php7.3</p>
+</blockquote>
+<blockquote>
+<p>The following additional packages will be installed:<br>  <strong>apache2</strong> apache2-bin apache2-data apache2-utils libapache2-mod-php7.3 …</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/13/GCP-deploy-php-nginx-mysql/" data-id="ck5c05sbr0001md7zgsie8bsc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/13/Laravel-custom-guard/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [Laravel]_custom_guard
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/13/SQL-join/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SQL_join</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/13/Laravel-custom-guard/">[Laravel]_custom_guard</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/13/GCP-deploy-php-nginx-mysql/">GCP_deploy_php_nginx_mysql</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/13/SQL-join/">SQL_join</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/13/php-mysql-plugin/">php_mysql_plugin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/10/RegularExpression/">RegularExpression</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 SarahCheng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
