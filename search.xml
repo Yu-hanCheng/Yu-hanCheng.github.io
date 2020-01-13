@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>[Laravel]_custom_guard</title>
+    <url>/2020/01/13/Laravel-custom-guard/</url>
+    <content><![CDATA[<h6 id="tags-Laravel6"><a class="header-anchor" href="#tags-Laravel6"></a>tags: <code>Laravel6</code></h6>
+<h2 id="Step-1-定義-guard"><a class="header-anchor" href="#Step-1-定義-guard"></a>Step 1 定義 guard</h2>
+<ul>
+<li>在 AuthServiceProvider 的 boot() 中 定義客製的 guard</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use Illuminate\Support\Facades\Auth;</span><br><span class="line"></span><br><span class="line">public function boot()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;registerPolicies();</span><br><span class="line"></span><br><span class="line">        Auth::viaRequest(&#39;custom-token&#39;, function ($request) &#123;</span><br><span class="line">            </span><br><span class="line">            if (!$request-&gt;remember_token) &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                $user &#x3D;User::where(&#39;remember_token&#39;, $request-&gt;remember_token)-&gt;first();</span><br><span class="line">                if ($user) &#123;</span><br><span class="line">                    Auth::login($user);</span><br><span class="line">                    return $user;</span><br><span class="line">                &#125;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果 token 是對的，即有通過 if($user), 要記得<code>Auth::login($user);</code> 這樣之後使用 <code>Auth::user();</code> 才會有值</p>
+</blockquote>
+<h2 id="Step-2-更改-config-auth-php"><a class="header-anchor" href="#Step-2-更改-config-auth-php"></a>Step 2 更改 config/auth.php</h2>
+<ul>
+<li>將 guards 陣列中 api 的 driver 改為自訂的’custom-token’</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;guards&#39; &#x3D;&gt; [</span><br><span class="line">        &#39;api&#39; &#x3D;&gt; [</span><br><span class="line">            &#39;driver&#39; &#x3D;&gt; &#39;custom-token&#39;,</span><br><span class="line">            &#39;provider&#39; &#x3D;&gt; &#39;users&#39;,</span><br><span class="line">            &#39;hash&#39; &#x3D;&gt; true,</span><br><span class="line">        ],</span><br><span class="line">    ],</span><br></pre></td></tr></table></figure>
+<h2 id="Step-3-自製身份認證-Middleware"><a class="header-anchor" href="#Step-3-自製身份認證-Middleware"></a>Step 3 自製身份認證 Middleware</h2>
+<ul>
+<li>在 Middleware 的 handle function 中 使用 Auth::guard()</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public function handle($request, Closure $next, $role)</span><br><span class="line">&#123;</span><br><span class="line">    try &#123;</span><br><span class="line">    </span><br><span class="line">        if (Auth::guard(&#39;api&#39;)-&gt;user()) &#123;</span><br><span class="line">            $request-&gt;merge([&#39;user&#39; &#x3D;&gt; Auth::user()]);</span><br><span class="line">        </span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">            </span><br><span class="line">                $credentials &#x3D; $request-&gt;only(&#39;name&#39;, &#39;password&#39;);</span><br><span class="line">                if (Auth::attempt($credentials,true)) &#123;</span><br><span class="line">                    $request-&gt;merge([&#39;user&#39; &#x3D;&gt; Auth::user()]);</span><br><span class="line">                    return $next($request);</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    return response()-&gt;json([&#39;result&#39;&#x3D;&gt;&#39;The token is unavailable. Please login again.&#39;]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125; catch (\Throwable $th) &#123;</span><br><span class="line">                return &quot;attempt error&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>GCP_deploy_php_nginx_mysql</title>
+    <url>/2020/01/13/GCP-deploy-php-nginx-mysql/</url>
+    <content><![CDATA[<h1>[GCP] 部署 Nginx server 之 Laravel 專案</h1>
+<h6 id="tags-GCP-Deployment-Nginx-Laravel6"><a class="header-anchor" href="#tags-GCP-Deployment-Nginx-Laravel6"></a>tags:<code>GCP</code>, <code>Deployment</code>, <code>Nginx</code>, <code>Laravel6</code></h6>
+<h1>事前</h1>
+<ol>
+<li>在自己電腦上安裝 gcloud sdk
+<ul>
+<li><a href="https://formulae.brew.sh/cask/google-cloud-sdk" target="_blank" rel="noopener">macOS</a> : <code>brew cask install google-cloud-sdk</code></li>
+<li><a href="https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu?hl=zh-tw" target="_blank" rel="noopener">Ubuntu</a></li>
+<li><a href="https://cloud.google.com/sdk/docs/quickstart-windows?hl=zh-tw" target="_blank" rel="noopener">Windows</a></li>
+</ul>
+</li>
+<li><code>gcloud init</code></li>
+<li><code>gcloud auth login</code></li>
+<li>查看 project <code>gcloud config list project</code><br>
+（<code>gcloud projects create</code><mark>PROJECT_ID</mark>）</li>
+</ol>
+<h1>Step 1 建立執行個體</h1>
+<ol>
+<li>
+<p><code>gcloud compute instances create test1023 --zone asia-east1-b --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts</code></p>
+<blockquote>
+<p>一定要這兩個參數：<code>--image-project</code> ,  <code>--image-family</code></p>
+</blockquote>
+<ul>
+<li>若全都用預設，就只要下指令: <code>gcloud compute instances create test1023</code>即可</li>
+<li>查看<a href="https://cloud.google.com/compute/docs/images?hl=zh-tw" target="_blank" rel="noopener">可用映像檔</a><br>
+查詢：<code>gcloud compute images list</code></li>
+<li>查看<a href="https://cloud.google.com/compute/docs/regions-zones/?hl=zh-tw#available" target="_blank" rel="noopener">可用區域</a><br>
+查詢：<code>gcloud compute zones list</code></li>
+<li>查詢目前VM個體：<code>gcloud compute instances list</code></li>
+</ul>
+</li>
+<li>
+<p>進入 <code>gcloud compute ssh &quot;test1023&quot;</code><br>
+(<code>gcloud compute ssh --zone &quot;asia-east1-b&quot; &quot;test1023&quot;</code>)</p>
+</li>
+<li>
+<p>Enter passphrase for key ‘/Users/sarahcheng/.ssh/google_compute_engine’: 輸入SSH 鑰匙密碼</p>
+</li>
+<li>
+<p>開瀏覽器到 <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">gcloud console</a> 將防火牆打開<br>
+<img src="https://i.imgur.com/qO078qH.png" alt=""></p>
+</li>
+</ol>
+<div class="danger">
+<p>如果要刪除 <code>gcloud compute instances delete test1023</code></p>
+</div>
+<h1>Step 2 安裝所需套件</h1>
+<ul>
+<li>看作業系統： 指令<code>lsb_release -a</code>  及 <code>cat /etc/*release</code></li>
+</ul>
+<h2 id="2-1-安裝-php"><a class="header-anchor" href="#2-1-安裝-php"></a>2-1 安裝 php</h2>
+<ol>
+<li>看 php 版本：<code>php -v</code>，更新到 7.3 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get install software-properties-common</span><br><span class="line">sudo add-apt-repository ppa:ondrej&#x2F;php</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y php7.3</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>sudo apt-get install php-mbstring php-gd php-xml zip</code>   // 同時安裝 php-mbstring、php-gd、php-xml、zip</li>
+<li>再看一次確認安裝成功 <code>php -v</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="2-2-安裝-composer"><a class="header-anchor" href="#2-2-安裝-composer"></a>2-2 安裝 composer</h2>
+<ul>
+<li>安裝指令：<code>curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer</code></li>
+<li>查看是否安裝成功：<code>composer -V</code></li>
+</ul>
+<h2 id="2-3-安裝-mysql"><a class="header-anchor" href="#2-3-安裝-mysql"></a>2-3 <a href="https://blog.johnsonlu.org/install-mysql-on-ubuntu/" target="_blank" rel="noopener">安裝 mysql</a></h2>
+<ol>
+<li>
+<p><code>sudo apt-get install mysql-server</code></p>
+<blockquote>
+<p>若要安裝特定版本<code>sudo apt-get install mysql-server-5.7</code><br>
+若要設密碼：<code>$sudo mysql_secure_installation</code></p>
+</blockquote>
+</li>
+<li>
+<p>啟動 mysql-server:<br>
+<code>sudo systemctl start mysql</code></p>
+</li>
+<li>
+<p>查看是否成功啟動：<br>
+<code>systemctl |grep  mysql</code></p>
+</li>
+<li>
+<p>進入 mysql server:<br>
+<code>sudo mysql -u root</code><br>
+更改有權限或要修改的使用者本身已登入 mysql 的密碼<br>
+<code>mysql&gt; SET PASSWORD FOR '目標使用者'@'主機' = PASSWORD('密碼');</code></p>
+<blockquote>
+<p>查看目前使用者及其身份驗證方式：<br>
+<code>SELECT User, Host, plugin FROM mysql.user;</code></p>
+</blockquote>
+<ol>
+<li><code>CREATE USER 'sarah'@'localhost' IDENTIFIED WITH mysql_native_password BY '00000';</code></li>
+<li>給予新建的使用者存取DB的權限：<br>
+<code>GRANT ALL PRIVILEGES ON *.* TO 'sarah'@'localhost';</code><br>
+(＊.＊ 代表所有DB的所有 table)</li>
+<li>查看目前 mysql server的使用者：<br>
+<code>select user,plugin,authentication_string from mysql.user;</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="2-4-安裝-Nginx"><a class="header-anchor" href="#2-4-安裝-Nginx"></a>2-4 安裝 Nginx</h2>
+<ol>
+<li>查看Port 80 是否被佔用：<code>sudo netstat -utlnp | grep 80</code><br>
+(參數意義 udp, tcp, listen, numeric, process)
+<blockquote>
+<p>numeric 的意思是將名稱數字化(IP)，例：原本的 localhost 會變成 127.0.0.1</p>
+</blockquote>
+</li>
+<li>Ubuntu 的映像檔已內建 Apache2，預設是開啟聽著 80 port， 查看 apache2 狀態：<code>sudo systemctl status apache2</code></li>
+<li>我們要改用 Nginx, 但是因為安裝 Nginx 後它也會自動聽 80 port，所以先把 apache2 停掉：<code>sudo systemctl stop apache2</code></li>
+<li>安裝 Nginx：<code>sudo apt-get install nginx -y</code></li>
+<li>安裝 Nginx 與 PHP溝通之套件 <code>sudo apt-get install php7.3-fpm</code></li>
+</ol>
+<h2 id="2-5-安裝-git"><a class="header-anchor" href="#2-5-安裝-git"></a>2-5 安裝 git</h2>
+<ol>
+<li><code>sudo apt-get update</code></li>
+<li><code>sudo apt-get upgrade</code></li>
+<li><code>sudo apt-get install git</code></li>
+</ol>
+<h1>Step 3 部署 github 專案</h1>
+<h2 id="3-1-專案下載"><a class="header-anchor" href="#3-1-專案下載"></a>3-1 專案下載</h2>
+<ul>
+<li><code>git clone https://github.com/laravel/laravel.git</code></li>
+</ul>
+<h2 id="3-2-Nginx-設定"><a class="header-anchor" href="#3-2-Nginx-設定"></a>3-2 Nginx 設定</h2>
+<ol>
+<li>
+<p>修改 Nginx 設定檔中的讀取路徑為我們要部署的專案<br>
+<code>sudo vim /etc/nginx/sites-available/default</code></p>
+<ul>
+<li>將專案路徑＋/public 寫在 root 後</li>
+</ul>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#root &#x2F;var&#x2F;www&#x2F;html;</span><br><span class="line">root &#x2F;home&#x2F;sarahcheng&#x2F;laravel&#x2F;public;</span><br><span class="line"># 加入 index.php</span><br><span class="line">index index.php;</span><br></pre></td></tr></table></figure>
+<p>如圖：<img src="https://i.imgur.com/EajSnwX.png" alt=""></p>
+<ul>
+<li>location 改成</li>
+</ul>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location &#x2F; &#123;</span><br><span class="line">  try_files $uri $uri&#x2F; &#x2F;index.php?$query_string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>拿掉 php 那段的註解，套件改 7.3 版本，<code>php7.3-fpm.sock;</code><br>
+<img src="https://i.imgur.com/9wEkfqw.png" alt=""></li>
+</ul>
+</li>
+<li>
+<p>讓 niginx 重新載入修改完的設定檔：<br>
+<code>sudo nginx -s reload</code><br>
+PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target="_blank" rel="noopener">參考連結</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nginx: [error] open() &quot;&#x2F;run&#x2F;nginx.pid&quot; failed (2: No such file or directory)</span><br><span class="line">&#x2F;&#x2F; 可輸入下列指令</span><br><span class="line">$ sudo nginx</span><br><span class="line">&#x2F;&#x2F; 執行該指令之後，會在 &#x2F;usr&#x2F;local&#x2F;var&#x2F;run&#x2F; 路徑下，創建一個名爲 nginx.pid 的文件 )</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>進入專案安裝套件和設定環境：<br>
+<code>cd laravel</code></p>
+<ol>
+<li><code>sudo composer install</code></li>
+<li><code>mv .env.example .env</code></li>
+<li>產生 access key：<br>
+<code>sudo php artisan key:generate</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="3-3-資料庫-Operation"><a class="header-anchor" href="#3-3-資料庫-Operation"></a>3-3 資料庫 Operation</h2>
+<ol>
+<li>進入 <code>mysql -u sarah -p00000</code>
+<ul>
+<li><code>CREATE DATABASE testdb;</code></li>
+<li><code>show databases;</code></li>
+<li><code>use testdb;</code></li>
+<li><code>show tables;</code> (現在是空的)</li>
+</ul>
+</li>
+<li>另外開一個 ssh 連線過去
+<ol>
+<li><code>sudo apt-get install php7.3-mysql</code></li>
+<li>進到專案目錄下：<code>cd laravel</code></li>
+<li>修改專案的環境設定 .env 檔： <code>vim .env</code> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DB_CONNECTION&#x3D;mysql</span><br><span class="line">DB_HOST&#x3D;127.0.0.1</span><br><span class="line">DB_PORT&#x3D;3306</span><br><span class="line">DB_DATABASE&#x3D;testdb</span><br><span class="line">DB_USERNAME&#x3D;sarah</span><br><span class="line">DB_PASSWORD&#x3D;00000</span><br></pre></td></tr></table></figure>
+</li>
+<li>執行指令建立 tabel: <code>php artisan migrate</code> (原本git clone 下來的專案就有寫好的 migration了)</li>
+</ol>
+</li>
+<li>回到 mysql
+<ul>
+<li><code>show tables;</code> (現在多了三個 table)</li>
+<li>離開 mysql <code>exit</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="3-4-更改權限"><a class="header-anchor" href="#3-4-更改權限"></a>3-4 更改權限</h2>
+<p>在專案目錄下：</p>
+<ul>
+<li>
+<p>先到專案路徑下看擁有者 <code>ls -al</code></p>
+</li>
+<li>
+<p>修改擁有群組為 www-data<br>
+<code>sudo chown -R sarahcheng.www-data .</code></p>
+<ul>
+<li>“chown” change 擁有者</li>
+<li>“-R” 往下層所有目錄遞迴</li>
+<li>“sarahcheng.www-data” 擁有者.擁有群組</li>
+<li>“.” 代表當前目錄</li>
+</ul>
+</li>
+<li>
+<p><code>sudo chmod -R 2770 ./storage/</code></p>
+<ul>
+<li>“chmod” change mode</li>
+<li>“-R” 往下層所有目錄遞迴</li>
+<li>“2770” 2代表 SGID <a href="http://www.vixual.net/blog/archives/224" target="_blank" rel="noopener">參考</a>
+<ul>
+<li>770分別代表：
+<ul>
+<li>擁有者的存取權限</li>
+<li>擁有群組的存取權限</li>
+<li>其他人的存取權限</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“.” 代表當前目錄</li>
+</ul>
+<p>到專案路徑下看擁有者是否更改成功 <code>ls -al</code></p>
+</li>
+</ul>
+<h1>P.S.</h1>
+<ul>
+<li>
+<p>GCP instance 的 IP，可在 GCP GUI 複製 <code>外部 IP</code>。</p>
+</li>
+<li>
+<p>將舊資料備份 <code>mysqldump --opt -usarahcheng -p laravel_shop &gt; test.sql</code></p>
+</li>
+<li>
+<p>或這樣備份 <code>mysqldump -u 使用者名稱 -p 要匯出的資料 &gt; 匯出後要叫的檔名.sql</code></p>
+</li>
+<li>
+<p>透過 ssh 將檔案傳到 GCE instance <code>gcloud compute scp test.sql test1023: --zone asia-east1-b</code></p>
+</li>
+<li>
+<p>查看目前機器中所有開放的 Port</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo netstat -utlnp</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>基本上不用安裝<a href="https://laravel.com/docs/6.x/installation" target="_blank" rel="noopener">laravel</a>(不太可能在server上開發)，不過還是提供參考指令：
+<div class="success">
+<ol>
+<li><code>sudo apt-get install php7.3-zip</code></li>
+<li><code>sudo composer global require laravel/installer</code></li>
+<li><code>vi ~/.bash_profile</code>
+<ul>
+<li><code>export PATH=&quot;$HOME/.composer/vendor/bin:$PATH&quot;</code></li>
+</ul>
+</li>
+<li>`source ~/.bash_profile</li>
+<li><code>laravel -V</code></li>
+</ol>
+</div>
+</li>
+</ul>
+<ul>
+<li>
+<p>Machine type <code>f1-micro</code> 只有 600M 的記憶體，但 Composer <a href="https://www.reddit.com/r/PHP/comments/2j15ff/making_composer_use_less_ram/cl7kk4t/" target="_blank" rel="noopener">據說</a> 會用到 512M 以上，目前聽到的方案：</p>
+<ol>
+<li>直接開足夠規格的機器：n1-standard-1 以上 (3.7G 記憶體)</li>
+<li>在需要 Composer 時才擴增記憶體，但機器需要進關機狀態</li>
+<li>本地建置完，再傳到機器內</li>
+</ol>
+</li>
+<li>
+<p>[記錄] 把整個資料夾都修改權限 <code>sudo chmod -R 2770 .</code>，解決了 502 錯誤</p>
+</li>
+<li>
+<p>[記錄] 後來卡在 404</p>
+<ul>
+<li>如果是放在 /var/www/larave/public 可以運作</li>
+<li>需要 <code>sudo chmod 777 -R ./storage/</code> (<a href="https://laracasts.com/discuss/channels/laravel/permission-denied-for-laravel-storage-logs?reply=483075" target="_blank" rel="noopener">來源</a>)，但似乎是有點危險的權限 (?)</li>
+</ul>
+</li>
+</ul>
+<h2 id="複製資料庫資料"><a class="header-anchor" href="#複製資料庫資料"></a>複製資料庫資料</h2>
+<p>本地備份資料：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p 資料庫名 &gt; 備份的檔案名稱.sql</span><br></pre></td></tr></table></figure>
+<p>複製到instance上：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo gcloud compute scp 備份的檔案名稱.sql instance名:&#x2F;home&#x2F;使用者名稱</span><br></pre></td></tr></table></figure>
+<p>instance上的mysql 建立database後，匯入資料</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -uroot -p 資料庫名 &lt; 備份的檔案名稱.sql</span><br></pre></td></tr></table></figure>
+<h2 id="加入新-ssh-使用者"><a class="header-anchor" href="#加入新-ssh-使用者"></a>加入新 ssh 使用者</h2>
+<ol>
+<li>在 Instance 加入你的公鑰，(GCP console)。</li>
+<li>注意：登入的帳號，就是公鑰最後面顯示的名稱</li>
+<li>用 ssh 指令連線。</li>
+</ol>
+<p><code>$ ssh  name@my_instance_ip</code><br>
+(預設抓 ~/.ssh/id_rsa )</p>
+<p>比如說</p>
+<p><code>$ ssh louis@35.XX.230.OO</code></p>
+<p>如果要指定用特定哪一組公私鑰，可加上 <code>-i</code><br>
+<code>$ ssh  -i  specified_private_key  name@my_instance_ip (edited)</code></p>
+<h2 id="Apache2-是在裝-php7-3-時的相依套件"><a class="header-anchor" href="#Apache2-是在裝-php7-3-時的相依套件"></a>Apache2 是在裝 php7.3 時的相依套件</h2>
+<blockquote>
+<p>$ sudo apt-get install php7.3</p>
+</blockquote>
+<blockquote>
+<p>The following additional packages will be installed:<br>
+<strong>apache2</strong> apache2-bin apache2-data apache2-utils libapache2-mod-php7.3 …</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title>SQL_join</title>
+    <url>/2020/01/13/SQL-join/</url>
+    <content><![CDATA[<h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
+<ol>
+<li>班上國文80分以上，但數學不及格的同學有哪些</li>
+<li>Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些</li>
+</ol>
+<hr>
+<h2 id="WHAT"><a class="header-anchor" href="#WHAT"></a>WHAT</h2>
+<p><img src="https://i.imgur.com/ZNsDRog.png" alt=""></p>
+<hr>
+<h2 id="Left-join"><a class="header-anchor" href="#Left-join"></a>Left join</h2>
+<p>會先取得所有的 Ａ，<br>
+那如果沒有相對應的 Ｂ ，就直接全部塞 null ，<br>
+他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』</p>
+<hr>
+<p><a href="https://dotblogs.com.tw/brooke/2015/03/15/150726" target="_blank" rel="noopener">參考</a></p>
+<hr>
+<h2 id="HOW"><a class="header-anchor" href="#HOW"></a>HOW</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
+<hr>
+]]></content>
+  </entry>
+  <entry>
+    <title>php_mysql_plugin</title>
+    <url>/2020/01/13/php-mysql-plugin/</url>
+    <content><![CDATA[<h1>曇花一現的plugin</h1>
+<h6 id="tags-想知道嗎-MySQL"><a class="header-anchor" href="#tags-想知道嗎-MySQL"></a>tags: <code>想知道嗎</code>, <code>MySQL</code></h6>
+<hr>
+<h3 id="php-之-caching-sha2-password-plugin-的興衰成敗"><a class="header-anchor" href="#php-之-caching-sha2-password-plugin-的興衰成敗"></a>php 之 caching_sha2_password plugin 的興衰成敗</h3>
+<ul>
+<li>WHY</li>
+<li>WHAT</li>
+<li>HOW<br>
+Note:<br>
+為什麼需要這個 plugin<br>
+他是什麼<br>
+php如何解決他造成的問題</li>
+</ul>
+<hr>
+<p><img src="https://i.imgur.com/H2NuPKj.png" alt=""><br>
+Note:<br>
+php 需要一些plugins來和 DB溝通 – Mysqlnd</p>
+<hr>
+<p>Versions of MySQL</p>
+<table>
+<thead>
+<tr>
+<th>Release</th>
+<th>End of support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.1</td>
+<td>December 2013</td>
+</tr>
+<tr>
+<td>5.5</td>
+<td>December 2018</td>
+</tr>
+<tr>
+<td>5.6</td>
+<td>February 2021</td>
+</tr>
+<tr>
+<td>5.7</td>
+<td>October 2023</td>
+</tr>
+<tr>
+<td><mark>8.0</mark></td>
+<td>April 2026</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Release</th>
+<th>Authentication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.x</td>
+<td>mysql_native_password</td>
+</tr>
+<tr>
+<td>5.6</td>
+<td><span><!-- .element: class="fragment highlight-green" -->sha256_password</span></td>
+</tr>
+<tr>
+<td>8.0</td>
+<td><span><!-- .element: class="fragment highlight-red" -->caching_sha2_password</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note:<br>
+MySQL 5.6以前，密碼加密方式是 <code>mysql_native_password</code>，SHA1算法。如果兩個用戶帳戶使用相同的密碼，加密出來的結果是相同的<br>
+後來MySQL 5.6有 <code>sha256_password</code> 使用多輪SHA256 hash，雖然安全性強，不過因為需要 TLS 或 支援 RSA 的密碼交換來連接到 server，非常耗時，所以後來又推出兩全其美的演算法。<br>
+MySQL 8 才升級，預設身份驗證的插件為<mark>caching_sha2_password</mark></p>
+<hr>
+<p><a href="https://mysqlserverteam.com/mysql-8-0-4-new-default-authentication-plugin-caching_sha2_password/" target="_blank" rel="noopener">caching_sha2_password</a></p>
+<ul>
+<li>首次連接:<br>
+<img src="https://i.imgur.com/eSPDRCN.png" alt=""></li>
+</ul>
+<hr>
+<ul>
+<li>下一次：<br>
+<img src="https://i.imgur.com/OhDSvbG.png" alt=""></li>
+</ul>
+<p>Note:<br>
+使用SHA-256提供更安全的密碼加密，並使用Cache來加速同一用戶的身份驗證過程。<br>
+<a href="https://kknews.cc/code/y3v2j3g.html" target="_blank" rel="noopener">reference</a></p>
+<hr>
+<p>支持 caching_sha2_password 的 PHP 版本</p>
+<div><font size="5">
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>no</th>
+<th>support</th>
+<th>no</th>
+<th>no</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7.1</td>
+<td>7.1.2(0214’17)</td>
+<td>7.1.20(0719’18)</td>
+<td>7.1.23(1009’18)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td>no</td>
+<td>7.2.8   (0717’18)</td>
+<td>7.2.11 (1009’18)</td>
+<td>7.2.22</td>
+</tr>
+<tr>
+<td>7.3 (0708’19)</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>7.4 (support)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</font>
+</div>
+Note:
+[官方文件：](https://www.php.net/manual/en/mysqli.requirements.php)
+When running a PHP version before 7.1.16, or PHP 7.2 before 7.2.4, set MySQL 8 Server's default password plugin to mysql_native_password. 
+<p><a href="http://ftp.ntu.edu.tw/pub/php/distributions/" target="_blank" rel="noopener">all distributions 有時間</a></p>
+<hr>
+<p>WHY NOT SUPPORT</p>
+<p><a href="https://bugs.php.net/bug.php?id=76651" target="_blank" rel="noopener">Bug #76651(<s>php programmer筆戰</s>)</a><br>
+<img src="https://i.imgur.com/a3kGge1.png" alt="" width="300"></p>
+<p>This new machanism requires <mark>OpenSSL</mark> and <mark>ext/hash</mark> to be available.</p>
+<p>Note:<br>
+Without those statically compiled in (we can’t do proper runtime guessing for C symbols) we can’t use them and have a compile-time decision to make.<br>
+<a href="https://bugs.php.net/bug.php?id=76660" target="_blank" rel="noopener">Bug #76660</a><br>
+PDOException</p>
+<hr>
+<p>On github:</p>
+<p>Per bug #76651 these changes do not appear to work correctly in<br>
+some cases. As no immediate fix seems to be forthcoming, I’m<br>
+reverting these changes.</p>
+<hr>
+<p>修改 /ext/mysqlnd/mysqlnd_auth.c</p>
+<p><a href="https://github.com/php/php-src/commit/03740ef7dffcc80530a89ebde3ccf5464f7f18e6#diff-398af6cde010c06283216edde1709507" target="_blank" rel="noopener">revert 內容 on github：</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Revert all MySQL auth related changes</span><br><span class="line"></span><br><span class="line">Per bug #76651 these changes do not appear to work correctly in</span><br><span class="line">some cases. As no immediate fix seems to be forthcoming, I&#39;m</span><br><span class="line">reverting these changes.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fixed invalid free introduced by d6e81f0 (avoid keeping &quot;invalid&quot; pointer)&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 11507c0.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix mysqlnd build without openssl&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 6c9db02.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix VC compilation as variable size array is not supported&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit f96df64.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix MySQL 8 auth&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit d6e81f0.</span><br></pre></td></tr></table></figure>
+<hr>
+<p>如果有興趣了解可以比較，之前升級加密方式改的 code 和最近改的方式差在哪裡<br>
+<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.2.8/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.2.8</a><br>
+<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.4/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.4</a></p>
+<p>Note:<br>
+C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank" rel="noopener"><code>a-&gt;b</code> 的含義是 <code>(*a).b</code></a></p>
+<hr>
+<p>目前處理方式：</p>
+<hr>
+<ol>
+<li>進入 mysql介面後，可以看一下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show variables like &#39;default_authentication_plugin&#39;;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 /usr/local/etc/my.cnf 中的[mysqld] 加</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
+<p>Note:<br>
+<a href="https://www.itread01.com/content/1532371255.html" target="_blank" rel="noopener">處理 caching_sha2_password 中文</a></p>
+<hr>
+<p>Thank you！^0^</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>RegularExpression</title>
+    <url>/2020/01/10/RegularExpression/</url>
+    <content><![CDATA[<h3 id="Outline"><a class="header-anchor" href="#Outline"></a>Outline</h3>
+<ul>
+<li>WHY</li>
+<li>WHAT</li>
+<li>HOW</li>
+</ul>
+<hr>
+<h1>Why</h1>
+<ul>
+<li>做過濾或驗證(錯誤,攻擊)</li>
+<li>規範或限制文字的格式</li>
+<li>提高效率</li>
+</ul>
+<hr>
+<h1>What</h1>
+<p>描述了一種字串匹配的模式</p>
+<hr>
+<h1>POSIX VS PERL</h1>
+<style>
+.reveal {
+  font-size: 24px;
+}
+</style>
+<ol>
+<li>The POSIX functions find the longest of the leftmost match, but PCRE stops on the first valid match</li>
+<li>As of PHP 5.3.0, the POSIX Regex extension is deprecated</li>
+</ol>
+<!-- from [Differences from POSIX regex](https://www.php.net/manual/en/reference.pcre.pattern.posix.php)
+ -->
+<table>
+<thead>
+<tr>
+<th>POSIX</th>
+<th>PCRE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ereg_replace()、eregi_replace()</td>
+<td>preg_replace()</td>
+</tr>
+<tr>
+<td>ereg()、eregi()</td>
+<td>preg_match()</td>
+</tr>
+<tr>
+<td>split()、 spliti()</td>
+<td>preg_split()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Android"><a class="header-anchor" href="#Android"></a>Android</h2>
+<ul>
+<li>Kotlin 用 JVM 的 lib，所以 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank" rel="noopener">Pattern</a> 同原生 Java</li>
+</ul>
+<h2 id="IOS"><a class="header-anchor" href="#IOS"></a>IOS</h2>
+<ul>
+<li>Swift 用 ICU engine， <a href="http://userguide.icu-project.org/strings/regexp" target="_blank" rel="noopener">Pattern</a></li>
+</ul>
+<hr>
+<h1>How</h1>
+<p>描述一種字串匹配的模式</p>
+<ul>
+<li>
+<p>delimiter</p>
+<ul>
+<li><code>/^[^0-9]$/</code></li>
+<li><code>#^[^0-9]$#</code></li>
+<li><code>+^[^0-9]$+</code></li>
+<li><code>%^[^0-9]$%</code></li>
+<li><code>[^[^0-9]$]</code></li>
+<li><code>(^[^0-9]$)</code></li>
+<li><code>{^[^0-9]$}</code></li>
+</ul>
+</li>
+<li>
+<p>中括號<code>[]</code> 內沒有順序，是&quot;或&quot;的概念</p>
+<ul>
+<li><code>[a-zA-Z0-9]	數字 或 大小寫字母</code></li>
+</ul>
+</li>
+<li>
+<p>開頭 <code>＾</code>  結尾 <code>$</code> (在中括號外的意義)</p>
+</li>
+<li>
+<p>[]: 括號內的任何字元<br>
+[^]: 不在括號內的任何字元</p>
+</li>
+</ul>
+<hr>
+<h1>Meta-characters</h1>
+<table>
+<thead>
+<tr>
+<th>重複表示</th>
+<th>規則</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>?</td>
+<td>未出現或出現一次</td>
+</tr>
+<tr>
+<td>*</td>
+<td>未出現或出現多次</td>
+</tr>
+<tr>
+<td>+</td>
+<td>出現一次或多次</td>
+</tr>
+<tr>
+<td>{a}</td>
+<td>出現 a 次</td>
+</tr>
+<tr>
+<td>{a,}</td>
+<td>至少出現 a 次以上</td>
+</tr>
+<tr>
+<td>{,b}</td>
+<td>最多出現 b 次</td>
+</tr>
+<tr>
+<td>{a,b}</td>
+<td>最少出現 a 次, 最多出現 b 次</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>Meta-characters 牛刀小試</h1>
+<ul>
+<li>
+<p><code>/a?/</code></p>
+<ul>
+<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0"> 1. “c”</label></li>
+<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1"> 2. “”</label></li>
+<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2"> 3. “app”</label></li>
+</ul>
+</li>
+<li>
+<p><code>/123a{1,2}/</code></p>
+<ul>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> 1. “123”</label></li>
+<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4"> 2. “123aaa”</label></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1>特殊字元</h1>
+<ul>
+<li><code>|</code> 是或的意思</li>
+<li><img src="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg" alt=""></li>
+</ul>
+<hr>
+<h1>特殊字元 牛刀小試</h1>
+<ul>
+<li>2020 GO</li>
+</ul>
+<ul>
+<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5"></label><code>[0-9]{3,}|\D$</code></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6"></label><code>[0-9]{3,}\D$</code></li>
+</ul>
+<hr>
+<ul>
+<li>檢查是不是英數混和字串<br>
+<code>$pattern = &quot;/^([0-9A-Za-z]+)$/&quot;;</code></li>
+<li>檢查是不是中文
+<ul>
+<li>\X 是 an extended Unicode sequence<br>
+<code>$pattern = &quot;/^[\x{4E00}-\x{9FFF}]+$/u&quot;;</code><br>
+<code>$pattern = &quot;/^([\u4E00-\u9FFF]+)$/&quot;;</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p>Big 5:</p>
+<ol>
+<li>每個中文字使用 2 bytes</li>
+<li>部分文字用到了控制碼 所以許多程式與軟體都會有許、蓋、功這類中文字的沖碼問題</li>
+<li>延伸字集中，有簡體字但是沒有定義日文字</li>
+</ol>
+</li>
+<li>
+<p>UTF-8 :</p>
+<ol>
+<li>採用變動大小，中文字使用 3 bytes，英文則維持 1 byte 因此若轉碼後，資料庫整體會變成 1.5 倍大，200MB(Big5) -&gt; 300MB(UTF-8)</li>
+<li>支援所有語言文字，還有一些怪怪圖形</li>
+<li>簡體與正體中文重複字只定義一次，例如說，簡體的”山”，跟正體的”山” 是同一個 UTF-8 編碼</li>
+</ol>
+</li>
+</ul>
+<hr>
+<pre><code>   ![](https://i.imgur.com/D37wa4P.png)
+</code></pre>
+<hr>
+<h1>Regex Online</h1>
+<p>https://regex101.com/<br>
+https://rubular.com/</p>
+<hr>
+<h1>考前總複習，趕緊抱佛腳XD</h1>
+<ul>
+<li>2020-01-09
+<ul>
+<li>年-
+<ul>
+<li><code>/^(d{4})-/</code></li>
+</ul>
+</li>
+<li>月-
+<ul>
+<li><code>/((0([1-9]{1}))|(1[1|2]))-/</code></li>
+</ul>
+</li>
+<li>日
+<ul>
+<li><code>/(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>併起來：<code>/^(d{4})-((0([1-9]{1}))|(1[1|2]))-(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></p>
+<hr>
+<ul>
+<li>URL(不是完整的)
+<ul>
+<li><code>/^(http(s)?:\/\/)?/</code></li>
+<li><code>/[\w.-]+(\.[\w.-]+)+/</code></li>
+<li><code>/[\w\-\._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$/</code></li>
+</ul>
+</li>
+</ul>
+<p>併起來：<code>^(http(s)?:\/\/)?[\w.-]+(\.[\w.-]+)+[\w-._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$</code></p>
+<blockquote>
+<ul>
+<li>應該要通過：<br>
+http://regex_101.com+<br>
+www.example.com<br>
+example.com<br>
+https://255.255.255.255<br>
+http://foo.com/blah_(wikipedia)#cite-1<br>
+https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux</li>
+<li>不能通過：<br>
+http:// shouldfail.com<br>
+http://.<br>
+http://?</li>
+</ul>
+</blockquote>
+<ul>
+<li><a href="https://mathiasbynens.be/demo/url-regex" target="_blank" rel="noopener">超多 URL REGEX 參考</a></li>
+</ul>
+<!-- /“^http:\/\/([\w-]+\.)+[\w-]+([\w- ./?%&=]*)?”/
+^http:\/\/(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*)) *(\\?\\S*)?$
+ -->
+<hr>
+<h1>Thank You!</h1>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/01/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a class="header-anchor" href="#Quick-Start"></a>Quick Start</h2>
+<h3 id="Create-a-new-post"><a class="header-anchor" href="#Create-a-new-post"></a>Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a class="header-anchor" href="#Run-server"></a>Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a class="header-anchor" href="#Generate-static-files"></a>Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a class="header-anchor" href="#Deploy-to-remote-sites"></a>Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
