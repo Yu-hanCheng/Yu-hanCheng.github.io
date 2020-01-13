@@ -7,16 +7,17 @@
   
   <title>php_mysql_plugin | Vegelephant&#39;s IT world</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="曇花一現的plugintags: 想知道嗎, MySQL php 之 caching_sha2_password plugin 的興衰成敗 WHY  WHAT HOWNote:為什麼需要這個 plugin他是什麼php如何解決他造成的問題   Note:php 需要一些plugins來和 DB溝通 – Mysqlnd  Versions of MySQL    Release End of sup">
+  <meta name="description" content="曇花一現的plugin tags: 想知道嗎, MySQL  php 之 caching_sha2_password plugin 的興衰成敗  WHY WHAT HOW Note: 為什麼需要這個 plugin 他是什麼 php如何解決他造成的問題    Note: php 需要一些plugins來和 DB溝通 – Mysqlnd  Versions of MySQL    Release En">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php_mysql_plugin">
 <meta property="og:url" content="http://yoursite.com/2020/01/13/php-mysql-plugin/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="曇花一現的plugintags: 想知道嗎, MySQL php 之 caching_sha2_password plugin 的興衰成敗 WHY  WHAT HOWNote:為什麼需要這個 plugin他是什麼php如何解決他造成的問題   Note:php 需要一些plugins來和 DB溝通 – Mysqlnd  Versions of MySQL    Release End of sup">
+<meta property="og:description" content="曇花一現的plugin tags: 想知道嗎, MySQL  php 之 caching_sha2_password plugin 的興衰成敗  WHY WHAT HOW Note: 為什麼需要這個 plugin 他是什麼 php如何解決他造成的問題    Note: php 需要一些plugins來和 DB溝通 – Mysqlnd  Versions of MySQL    Release En">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/H2NuPKj.png">
 <meta property="og:image" content="https://i.imgur.com/eSPDRCN.png">
 <meta property="og:image" content="https://i.imgur.com/OhDSvbG.png">
+<meta property="og:image" content="https://i.imgur.com/a3kGge1.png">
 <meta property="article:published_time" content="2020-01-13T02:33:40.000Z">
 <meta property="article:modified_time" content="2020-01-13T02:33:58.523Z">
 <meta property="article:author" content="SarahCheng">
@@ -92,14 +93,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="曇花一現的plugin"><a href="#曇花一現的plugin" class="headerlink" title="曇花一現的plugin"></a>曇花一現的plugin</h1><h6 id="tags-想知道嗎-MySQL"><a href="#tags-想知道嗎-MySQL" class="headerlink" title="tags: 想知道嗎, MySQL"></a>tags: <code>想知道嗎</code>, <code>MySQL</code></h6><hr>
-<h3 id="php-之-caching-sha2-password-plugin-的興衰成敗"><a href="#php-之-caching-sha2-password-plugin-的興衰成敗" class="headerlink" title="php 之 caching_sha2_password plugin 的興衰成敗"></a>php 之 caching_sha2_password plugin 的興衰成敗</h3><ul>
-<li>WHY </li>
+        <h1>曇花一現的plugin</h1>
+<h6 id="tags-想知道嗎-MySQL"><a class="header-anchor" href="#tags-想知道嗎-MySQL"></a>tags: <code>想知道嗎</code>, <code>MySQL</code></h6>
+<hr>
+<h3 id="php-之-caching-sha2-password-plugin-的興衰成敗"><a class="header-anchor" href="#php-之-caching-sha2-password-plugin-的興衰成敗"></a>php 之 caching_sha2_password plugin 的興衰成敗</h3>
+<ul>
+<li>WHY</li>
 <li>WHAT</li>
-<li>HOW<br>Note:<br>為什麼需要這個 plugin<br>他是什麼<br>php如何解決他造成的問題</li>
+<li>HOW<br>
+Note:<br>
+為什麼需要這個 plugin<br>
+他是什麼<br>
+php如何解決他造成的問題</li>
 </ul>
 <hr>
-<p><img src="https://i.imgur.com/H2NuPKj.png" alt=""><br>Note:<br>php 需要一些plugins來和 DB溝通 – Mysqlnd</p>
+<p><img src="https://i.imgur.com/H2NuPKj.png" alt=""><br>
+Note:<br>
+php 需要一些plugins來和 DB溝通 – Mysqlnd</p>
 <hr>
 <p>Versions of MySQL</p>
 <table>
@@ -109,7 +119,8 @@
 <th>End of support</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>5.1</td>
 <td>December 2013</td>
 </tr>
@@ -126,10 +137,11 @@
 <td>October 2023</td>
 </tr>
 <tr>
-<td>==8.0==</td>
+<td><mark>8.0</mark></td>
 <td>April 2026</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
 <table>
 <thead>
@@ -138,7 +150,8 @@
 <th>Authentication</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>5.x</td>
 <td>mysql_native_password</td>
 </tr>
@@ -150,75 +163,120 @@
 <td>8.0</td>
 <td><span><!-- .element: class="fragment highlight-red" -->caching_sha2_password</span></td>
 </tr>
-<tr>
-<td>Note:</td>
-<td></td>
-</tr>
-<tr>
-<td>MySQL 5.6以前，密碼加密方式是 <code>mysql_native_password</code>，SHA1算法。如果兩個用戶帳戶使用相同的密碼，加密出來的結果是相同的</td>
-<td></td>
-</tr>
-<tr>
-<td>後來MySQL 5.6有 <code>sha256_password</code> 使用多輪SHA256 hash，雖然安全性強，不過因為需要 TLS 或 支援 RSA 的密碼交換來連接到 server，非常耗時，所以後來又推出兩全其美的演算法。</td>
-<td></td>
-</tr>
-<tr>
-<td>MySQL 8 才升級，預設身份驗證的插件為==caching_sha2_password==</td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+<p>Note:<br>
+MySQL 5.6以前，密碼加密方式是 <code>mysql_native_password</code>，SHA1算法。如果兩個用戶帳戶使用相同的密碼，加密出來的結果是相同的<br>
+後來MySQL 5.6有 <code>sha256_password</code> 使用多輪SHA256 hash，雖然安全性強，不過因為需要 TLS 或 支援 RSA 的密碼交換來連接到 server，非常耗時，所以後來又推出兩全其美的演算法。<br>
+MySQL 8 才升級，預設身份驗證的插件為<mark>caching_sha2_password</mark></p>
 <hr>
 <p><a href="https://mysqlserverteam.com/mysql-8-0-4-new-default-authentication-plugin-caching_sha2_password/" target="_blank" rel="noopener">caching_sha2_password</a></p>
 <ul>
-<li>首次連接:<br><img src="https://i.imgur.com/eSPDRCN.png" alt=""></li>
+<li>首次連接:<br>
+<img src="https://i.imgur.com/eSPDRCN.png" alt=""></li>
 </ul>
 <hr>
 <ul>
-<li>下一次：<br><img src="https://i.imgur.com/OhDSvbG.png" alt=""></li>
+<li>下一次：<br>
+<img src="https://i.imgur.com/OhDSvbG.png" alt=""></li>
 </ul>
-<p>Note:<br>使用SHA-256提供更安全的密碼加密，並使用Cache來加速同一用戶的身份驗證過程。<br><a href="https://kknews.cc/code/y3v2j3g.html" target="_blank" rel="noopener">reference</a></p>
+<p>Note:<br>
+使用SHA-256提供更安全的密碼加密，並使用Cache來加速同一用戶的身份驗證過程。<br>
+<a href="https://kknews.cc/code/y3v2j3g.html" target="_blank" rel="noopener">reference</a></p>
 <hr>
-<p>支持 caching_sha2_password 的 PHP 版本 </p>
+<p>支持 caching_sha2_password 的 PHP 版本</p>
 <div><font size="5">
-
-<p>| 版本 |   no | support |no  | no  |<br>| — | —| — | — | — |—|<br>|7.1|7.1.2(0214’17)|7.1.20(0719’18)|7.1.23(1009’18)|no |<br>|7.2|no |7.2.8   (0717’18)|7.2.11 (1009’18)|7.2.22|<br>|7.3 (0708’19)|no|no|no|no|7.3.9<br>|7.4 (support)|<br></font></p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>no</th>
+<th>support</th>
+<th>no</th>
+<th>no</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7.1</td>
+<td>7.1.2(0214’17)</td>
+<td>7.1.20(0719’18)</td>
+<td>7.1.23(1009’18)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td>no</td>
+<td>7.2.8   (0717’18)</td>
+<td>7.2.11 (1009’18)</td>
+<td>7.2.22</td>
+</tr>
+<tr>
+<td>7.3 (0708’19)</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>7.4 (support)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</font>
 </div>
 Note:
 [官方文件：](https://www.php.net/manual/en/mysqli.requirements.php)
 When running a PHP version before 7.1.16, or PHP 7.2 before 7.2.4, set MySQL 8 Server's default password plugin to mysql_native_password. 
-
 <p><a href="http://ftp.ntu.edu.tw/pub/php/distributions/" target="_blank" rel="noopener">all distributions 有時間</a></p>
 <hr>
 <p>WHY NOT SUPPORT</p>
-<p><a href="https://bugs.php.net/bug.php?id=76651" target="_blank" rel="noopener">Bug #76651(<del>php programmer筆戰</del>)</a><br>![](<a href="https://i.imgur.com/a3kGge1.png" target="_blank" rel="noopener">https://i.imgur.com/a3kGge1.png</a> =300x)</p>
-<p>This new machanism requires ==OpenSSL== and ==ext/hash== to be available.</p>
-<p>Note:<br>Without those statically compiled in (we can’t do proper runtime guessing for C symbols) we can’t use them and have a compile-time decision to make.<br><a href="https://bugs.php.net/bug.php?id=76660" target="_blank" rel="noopener">Bug #76660</a><br>PDOException</p>
+<p><a href="https://bugs.php.net/bug.php?id=76651" target="_blank" rel="noopener">Bug #76651(<s>php programmer筆戰</s>)</a><br>
+<img src="https://i.imgur.com/a3kGge1.png" alt="" width="300"></p>
+<p>This new machanism requires <mark>OpenSSL</mark> and <mark>ext/hash</mark> to be available.</p>
+<p>Note:<br>
+Without those statically compiled in (we can’t do proper runtime guessing for C symbols) we can’t use them and have a compile-time decision to make.<br>
+<a href="https://bugs.php.net/bug.php?id=76660" target="_blank" rel="noopener">Bug #76660</a><br>
+PDOException</p>
 <hr>
 <p>On github:</p>
-<p>Per bug #76651 these changes do not appear to work correctly in<br>some cases. As no immediate fix seems to be forthcoming, I’m<br>reverting these changes.</p>
+<p>Per bug #76651 these changes do not appear to work correctly in<br>
+some cases. As no immediate fix seems to be forthcoming, I’m<br>
+reverting these changes.</p>
 <hr>
 <p>修改 /ext/mysqlnd/mysqlnd_auth.c</p>
 <p><a href="https://github.com/php/php-src/commit/03740ef7dffcc80530a89ebde3ccf5464f7f18e6#diff-398af6cde010c06283216edde1709507" target="_blank" rel="noopener">revert 內容 on github：</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Revert all MySQL auth related changes</span><br><span class="line"></span><br><span class="line">Per bug #76651 these changes do not appear to work correctly in</span><br><span class="line">some cases. As no immediate fix seems to be forthcoming, I&#39;m</span><br><span class="line">reverting these changes.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fixed invalid free introduced by d6e81f0 (avoid keeping &quot;invalid&quot; pointer)&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 11507c0.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix mysqlnd build without openssl&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 6c9db02.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix VC compilation as variable size array is not supported&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit f96df64.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix MySQL 8 auth&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit d6e81f0.</span><br></pre></td></tr></table></figure>
-
 <hr>
-<p>如果有興趣了解可以比較，之前升級加密方式改的 code 和最近改的方式差在哪裡<br><a href="https://raw.githubusercontent.com/php/php-src/PHP-7.2.8/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.2.8</a><br><a href="https://raw.githubusercontent.com/php/php-src/PHP-7.4/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.4</a></p>
-<p>Note:<br> C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank" rel="noopener"><code>a-&gt;b</code> 的含義是 <code>(*a).b</code></a></p>
+<p>如果有興趣了解可以比較，之前升級加密方式改的 code 和最近改的方式差在哪裡<br>
+<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.2.8/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.2.8</a><br>
+<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.4/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.4</a></p>
+<p>Note:<br>
+C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank" rel="noopener"><code>a-&gt;b</code> 的含義是 <code>(*a).b</code></a></p>
 <hr>
 <p>目前處理方式：</p>
 <hr>
 <ol>
-<li>進入 mysql介面後，可以看一下 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;default_authentication_plugin&#39;;</span><br></pre></td></tr></table></figure></li>
-<li>在 /usr/local/etc/my.cnf 中的[mysqld] 加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
-Note:<br><a href="https://www.itread01.com/content/1532371255.html" target="_blank" rel="noopener">處理 caching_sha2_password 中文</a></li>
+<li>進入 mysql介面後，可以看一下</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;default_authentication_plugin&#39;;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 /usr/local/etc/my.cnf 中的[mysqld] 加</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
+<p>Note:<br>
+<a href="https://www.itread01.com/content/1532371255.html" target="_blank" rel="noopener">處理 caching_sha2_password 中文</a></p>
 <hr>
 <p>Thank you！^0^</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/13/php-mysql-plugin/" data-id="ck5c05sbv0004md7zac6e3a6r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/13/php-mysql-plugin/" data-id="ck5c2uu400005xk7z6pcual1s" class="article-share-link">Share</a>
       
       
     </footer>

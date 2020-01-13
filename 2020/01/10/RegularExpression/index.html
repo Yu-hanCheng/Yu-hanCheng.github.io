@@ -7,12 +7,12 @@
   
   <title>RegularExpression | Vegelephant&#39;s IT world</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Outline WHY  WHAT HOW   Why 做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率   What描述了一種字串匹配的模式  POSIX VS PERL .reveal {   font-size: 24px; }    The POSIX functions find the longest of the leftmost match, but PCRE stops">
+  <meta name="description" content="Outline  WHY WHAT HOW   Why  做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率   What 描述了一種字串匹配的模式  POSIX VS PERL  .reveal {   font-size: 24px; }   The POSIX functions find the longest of the leftmost match, but PCRE sto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RegularExpression">
 <meta property="og:url" content="http://yoursite.com/2020/01/10/RegularExpression/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="Outline WHY  WHAT HOW   Why 做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率   What描述了一種字串匹配的模式  POSIX VS PERL .reveal {   font-size: 24px; }    The POSIX functions find the longest of the leftmost match, but PCRE stops">
+<meta property="og:description" content="Outline  WHY WHAT HOW   Why  做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率   What 描述了一種字串匹配的模式  POSIX VS PERL  .reveal {   font-size: 24px; }   The POSIX functions find the longest of the leftmost match, but PCRE sto">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg">
 <meta property="article:published_time" content="2020-01-10T08:30:20.000Z">
@@ -90,33 +90,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h3><ul>
-<li>WHY </li>
+        <h3 id="Outline"><a class="header-anchor" href="#Outline"></a>Outline</h3>
+<ul>
+<li>WHY</li>
 <li>WHAT</li>
 <li>HOW</li>
 </ul>
 <hr>
-<h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><ul>
+<h1>Why</h1>
+<ul>
 <li>做過濾或驗證(錯誤,攻擊)</li>
 <li>規範或限制文字的格式</li>
 <li>提高效率</li>
 </ul>
 <hr>
-<h1 id="What"><a href="#What" class="headerlink" title="What"></a>What</h1><p>描述了一種字串匹配的模式</p>
+<h1>What</h1>
+<p>描述了一種字串匹配的模式</p>
 <hr>
-<h1 id="POSIX-VS-PERL"><a href="#POSIX-VS-PERL" class="headerlink" title="POSIX VS PERL"></a>POSIX VS PERL</h1><style>
+<h1>POSIX VS PERL</h1>
+<style>
 .reveal {
   font-size: 24px;
 }
 </style>
-
 <ol>
 <li>The POSIX functions find the longest of the leftmost match, but PCRE stops on the first valid match</li>
 <li>As of PHP 5.3.0, the POSIX Regex extension is deprecated</li>
 </ol>
 <!-- from [Differences from POSIX regex](https://www.php.net/manual/en/reference.pcre.pattern.posix.php)
  -->
-
 <table>
 <thead>
 <tr>
@@ -124,7 +126,8 @@
 <th>PCRE</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>ereg_replace()、eregi_replace()</td>
 <td>preg_replace()</td>
 </tr>
@@ -136,17 +139,22 @@
 <td>split()、 spliti()</td>
 <td>preg_split()</td>
 </tr>
-</tbody></table>
-<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><ul>
+</tbody>
+</table>
+<h2 id="Android"><a class="header-anchor" href="#Android"></a>Android</h2>
+<ul>
 <li>Kotlin 用 JVM 的 lib，所以 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank" rel="noopener">Pattern</a> 同原生 Java</li>
 </ul>
-<h2 id="IOS"><a href="#IOS" class="headerlink" title="IOS"></a>IOS</h2><ul>
+<h2 id="IOS"><a class="header-anchor" href="#IOS"></a>IOS</h2>
+<ul>
 <li>Swift 用 ICU engine， <a href="http://userguide.icu-project.org/strings/regexp" target="_blank" rel="noopener">Pattern</a></li>
 </ul>
 <hr>
-<h1 id="How"><a href="#How" class="headerlink" title="How"></a>How</h1><p>描述一種字串匹配的模式</p>
+<h1>How</h1>
+<p>描述一種字串匹配的模式</p>
 <ul>
-<li><p>delimiter</p>
+<li>
+<p>delimiter</p>
 <ul>
 <li><code>/^[^0-9]$/</code></li>
 <li><code>#^[^0-9]$#</code></li>
@@ -157,25 +165,31 @@
 <li><code>{^[^0-9]$}</code></li>
 </ul>
 </li>
-<li><p>中括號<code>[]</code> 內沒有順序，是”或”的概念</p>
+<li>
+<p>中括號<code>[]</code> 內沒有順序，是&quot;或&quot;的概念</p>
 <ul>
-<li><code>[a-zA-Z0-9]    數字 或 大小寫字母</code></li>
+<li><code>[a-zA-Z0-9]	數字 或 大小寫字母</code></li>
 </ul>
 </li>
-<li><p>開頭 <code>＾</code>  結尾 <code>$</code> (在中括號外的意義)</p>
+<li>
+<p>開頭 <code>＾</code>  結尾 <code>$</code> (在中括號外的意義)</p>
 </li>
-<li><p>[]: 括號內的任何字元</p>
+<li>
+<p>[]: 括號內的任何字元<br>
+[^]: 不在括號內的任何字元</p>
 </li>
 </ul>
 <hr>
-<h1 id="Meta-characters"><a href="#Meta-characters" class="headerlink" title="Meta-characters"></a>Meta-characters</h1><table>
+<h1>Meta-characters</h1>
+<table>
 <thead>
 <tr>
 <th>重複表示</th>
 <th>規則</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>?</td>
 <td>未出現或出現一次</td>
 </tr>
@@ -203,69 +217,66 @@
 <td>{a,b}</td>
 <td>最少出現 a 次, 最多出現 b 次</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h1 id="Meta-characters-牛刀小試"><a href="#Meta-characters-牛刀小試" class="headerlink" title="Meta-characters 牛刀小試"></a>Meta-characters 牛刀小試</h1><ul>
-<li><p><code>/a?/</code></p>
+<h1>Meta-characters 牛刀小試</h1>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> <ol>
-<li>“c”</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="2">
-<li>“”</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="3">
-<li>“app”</li>
-</ol>
-</li>
+<li>
+<p><code>/a?/</code></p>
+<ul>
+<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0"> 1. “c”</label></li>
+<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1"> 2. “”</label></li>
+<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2"> 3. “app”</label></li>
 </ul>
 </li>
-<li><p><code>/123a{1,2}/</code></p>
+<li>
+<p><code>/123a{1,2}/</code></p>
 <ul>
-<li><input disabled="" type="checkbox"> <ol>
-<li>“123”</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="2">
-<li>“123aaa”</li>
-</ol>
-</li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> 1. “123”</label></li>
+<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4"> 2. “123aaa”</label></li>
 </ul>
 </li>
 </ul>
 <hr>
-<h1 id="特殊字元"><a href="#特殊字元" class="headerlink" title="特殊字元"></a>特殊字元</h1><ul>
+<h1>特殊字元</h1>
+<ul>
 <li><code>|</code> 是或的意思</li>
 <li><img src="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg" alt=""></li>
 </ul>
 <hr>
-<h1 id="特殊字元-牛刀小試"><a href="#特殊字元-牛刀小試" class="headerlink" title="特殊字元 牛刀小試"></a>特殊字元 牛刀小試</h1><ul>
+<h1>特殊字元 牛刀小試</h1>
+<ul>
 <li>2020 GO</li>
 </ul>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> <code>[0-9]{3,}|\D$</code></li>
-<li><input disabled="" type="checkbox"> <code>[0-9]{3,}\D$</code></li>
+<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5"></label><code>[0-9]{3,}|\D$</code></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6"></label><code>[0-9]{3,}\D$</code></li>
 </ul>
 <hr>
 <ul>
-<li>檢查是不是英數混和字串<br><code>$pattern = &quot;/^([0-9A-Za-z]+)$/&quot;;</code></li>
-<li>檢查是不是中文<ul>
-<li>\X 是 an extended Unicode sequence<br><code>$pattern = &quot;/^[\x{4E00}-\x{9FFF}]+$/u&quot;;</code><br><code>$pattern = &quot;/^([\u4E00-\u9FFF]+)$/&quot;;</code></li>
+<li>檢查是不是英數混和字串<br>
+<code>$pattern = &quot;/^([0-9A-Za-z]+)$/&quot;;</code></li>
+<li>檢查是不是中文
+<ul>
+<li>\X 是 an extended Unicode sequence<br>
+<code>$pattern = &quot;/^[\x{4E00}-\x{9FFF}]+$/u&quot;;</code><br>
+<code>$pattern = &quot;/^([\u4E00-\u9FFF]+)$/&quot;;</code></li>
 </ul>
 </li>
 </ul>
 <hr>
 <ul>
-<li><p>Big 5:</p>
+<li>
+<p>Big 5:</p>
 <ol>
 <li>每個中文字使用 2 bytes</li>
 <li>部分文字用到了控制碼 所以許多程式與軟體都會有許、蓋、功這類中文字的沖碼問題</li>
 <li>延伸字集中，有簡體字但是沒有定義日文字</li>
 </ol>
 </li>
-<li><p>UTF-8 :</p>
+<li>
+<p>UTF-8 :</p>
 <ol>
 <li>採用變動大小，中文字使用 3 bytes，英文則維持 1 byte 因此若轉碼後，資料庫整體會變成 1.5 倍大，200MB(Big5) -&gt; 300MB(UTF-8)</li>
 <li>支援所有語言文字，還有一些怪怪圖形</li>
@@ -274,20 +285,29 @@
 </li>
 </ul>
 <hr>
-<pre><code>![](https://i.imgur.com/D37wa4P.png)</code></pre><hr>
-<h1 id="Regex-Online"><a href="#Regex-Online" class="headerlink" title="Regex Online"></a>Regex Online</h1><p><a href="https://regex101.com/" target="_blank" rel="noopener">https://regex101.com/</a><br><a href="https://rubular.com/" target="_blank" rel="noopener">https://rubular.com/</a></p>
+<pre><code>   ![](https://i.imgur.com/D37wa4P.png)
+</code></pre>
 <hr>
-<h1 id="考前總複習，趕緊抱佛腳XD"><a href="#考前總複習，趕緊抱佛腳XD" class="headerlink" title="考前總複習，趕緊抱佛腳XD"></a>考前總複習，趕緊抱佛腳XD</h1><ul>
-<li>2020-01-09<ul>
-<li>年-<ul>
+<h1>Regex Online</h1>
+<p>https://regex101.com/<br>
+https://rubular.com/</p>
+<hr>
+<h1>考前總複習，趕緊抱佛腳XD</h1>
+<ul>
+<li>2020-01-09
+<ul>
+<li>年-
+<ul>
 <li><code>/^(d{4})-/</code></li>
 </ul>
 </li>
-<li>月-<ul>
+<li>月-
+<ul>
 <li><code>/((0([1-9]{1}))|(1[1|2]))-/</code></li>
 </ul>
 </li>
-<li>日<ul>
+<li>日
+<ul>
 <li><code>/(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></li>
 </ul>
 </li>
@@ -297,33 +317,43 @@
 <p>併起來：<code>/^(d{4})-((0([1-9]{1}))|(1[1|2]))-(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></p>
 <hr>
 <ul>
-<li>URL(不是完整的)<ul>
+<li>URL(不是完整的)
+<ul>
 <li><code>/^(http(s)?:\/\/)?/</code></li>
 <li><code>/[\w.-]+(\.[\w.-]+)+/</code></li>
-<li><code>/[\w\-\._~:\/?#\[\]@!\$&amp;&#39;\(\)\*\+,;=.]+$/</code></li>
+<li><code>/[\w\-\._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$/</code></li>
 </ul>
 </li>
 </ul>
-<p>併起來：<code>^(http(s)?:\/\/)?[\w.-]+(\.[\w.-]+)+[\w-._~:\/?#\[\]@!\$&amp;&#39;\(\)\*\+,;=.]+$</code></p>
+<p>併起來：<code>^(http(s)?:\/\/)?[\w.-]+(\.[\w.-]+)+[\w-._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$</code></p>
 <blockquote>
 <ul>
-<li>應該要通過：<br><a href="http://regex_101.com+" target="_blank" rel="noopener">http://regex_101.com+</a><br><a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a><br>example.com<br><a href="https://255.255.255.255" target="_blank" rel="noopener">https://255.255.255.255</a><br><a href="http://foo.com/blah_(wikipedia)#cite-1" target="_blank" rel="noopener">http://foo.com/blah_(wikipedia)#cite-1</a><br><a href="https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux" target="_blank" rel="noopener">https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux</a>    </li>
-<li>不能通過：<br>http:// shouldfail.com<br>http://.<br>http://?</li>
+<li>應該要通過：<br>
+http://regex_101.com+<br>
+www.example.com<br>
+example.com<br>
+https://255.255.255.255<br>
+http://foo.com/blah_(wikipedia)#cite-1<br>
+https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux</li>
+<li>不能通過：<br>
+http:// shouldfail.com<br>
+http://.<br>
+http://?</li>
 </ul>
 </blockquote>
 <ul>
-<li><a href="https://mathiasbynens.be/demo/url-regex" target="_blank" rel="noopener">超多 URL REGEX 參考</a><!-- /“^http:\/\/([\w-]+\.)+[\w-]+([\w- ./?%&=]*)?”/
-^http:\/\/(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*)) *(\\?\\S*)?$
--->
-
-</li>
+<li><a href="https://mathiasbynens.be/demo/url-regex" target="_blank" rel="noopener">超多 URL REGEX 參考</a></li>
 </ul>
+<!-- /“^http:\/\/([\w-]+\.)+[\w-]+([\w- ./?%&=]*)?”/
+^http:\/\/(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*)) *(\\?\\S*)?$
+ -->
 <hr>
-<h1 id="Thank-You"><a href="#Thank-You" class="headerlink" title="Thank You!"></a>Thank You!</h1>
+<h1>Thank You!</h1>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/10/RegularExpression/" data-id="ck5c05sbt0002md7z0m3tcb5q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/10/RegularExpression/" data-id="ck5c2uu3l0000xk7zdgjr1vw1" class="article-share-link">Share</a>
       
       
     </footer>

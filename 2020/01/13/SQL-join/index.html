@@ -7,12 +7,12 @@
   
   <title>SQL_join | Vegelephant&#39;s IT world</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WHY 班上國文80分以上，但數學不及格的同學有哪些 Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些   WHAT  Left join會先取得所有的 Ａ，那如果沒有相對應的 Ｂ ，就直接全部塞 null ，他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』  參考  HOW12345678$magics &#x3D; ShopMagic::where([&#39;s">
+  <meta name="description" content="WHY  班上國文80分以上，但數學不及格的同學有哪些 Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些   WHAT   Left join 會先取得所有的 Ａ， 那如果沒有相對應的 Ｂ ，就直接全部塞 null ， 他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』  參考  HOW 12345678$magics &#x3D; ShopMagic::where([">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL_join">
 <meta property="og:url" content="http://yoursite.com/2020/01/13/SQL-join/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="WHY 班上國文80分以上，但數學不及格的同學有哪些 Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些   WHAT  Left join會先取得所有的 Ａ，那如果沒有相對應的 Ｂ ，就直接全部塞 null ，他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』  參考  HOW12345678$magics &#x3D; ShopMagic::where([&#39;s">
+<meta property="og:description" content="WHY  班上國文80分以上，但數學不及格的同學有哪些 Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些   WHAT   Left join 會先取得所有的 Ａ， 那如果沒有相對應的 Ｂ ，就直接全部塞 null ， 他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』  參考  HOW 12345678$magics &#x3D; ShopMagic::where([">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/ZNsDRog.png">
 <meta property="article:published_time" content="2020-01-13T02:37:58.000Z">
@@ -90,25 +90,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h2><ol>
+        <h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
+<ol>
 <li>班上國文80分以上，但數學不及格的同學有哪些</li>
 <li>Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些</li>
 </ol>
 <hr>
-<h2 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h2><p><img src="https://i.imgur.com/ZNsDRog.png" alt=""></p>
+<h2 id="WHAT"><a class="header-anchor" href="#WHAT"></a>WHAT</h2>
+<p><img src="https://i.imgur.com/ZNsDRog.png" alt=""></p>
 <hr>
-<h2 id="Left-join"><a href="#Left-join" class="headerlink" title="Left join"></a>Left join</h2><p>會先取得所有的 Ａ，<br>那如果沒有相對應的 Ｂ ，就直接全部塞 null ，<br>他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』</p>
+<h2 id="Left-join"><a class="header-anchor" href="#Left-join"></a>Left join</h2>
+<p>會先取得所有的 Ａ，<br>
+那如果沒有相對應的 Ｂ ，就直接全部塞 null ，<br>
+他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』</p>
 <hr>
 <p><a href="https://dotblogs.com.tw/brooke/2015/03/15/150726" target="_blank" rel="noopener">參考</a></p>
 <hr>
-<h2 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
-
+<h2 id="HOW"><a class="header-anchor" href="#HOW"></a>HOW</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
 <hr>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/13/SQL-join/" data-id="ck5c05sbu0003md7zdpva4m2t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/13/SQL-join/" data-id="ck5c2uu3y0003xk7z5lr45kqv" class="article-share-link">Share</a>
       
       
     </footer>
