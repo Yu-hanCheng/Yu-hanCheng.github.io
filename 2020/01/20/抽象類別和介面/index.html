@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PHP," />
 
 
 
@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="tags: Laravel6 Step 1 定義 guard  在 AuthServiceProvider 的 boot() 中 定義客製的 guard  1234567891011121314151617181920use Illuminate\Support\Facades\Auth;public function boot()    &amp;#123;        $this-&gt;regis">
+<meta name="description" content="Compare     類別（Class） 抽象類別（Abstract Class） 介面（Interface）     宣告屬性（attribute） ✓ ✓ ✖   常數（const） ✓ ✓ ✓   實例化（new class） ✓ ✖ ✖   抽象方法（abstract function） ✖ ✓ ✓   實作方法內容（functoin()） ✓ ✓ ✖   類別是否可繼承多個 ✖ ✖">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Laravel]_custom_guard">
-<meta property="og:url" content="http://yoursite.com/2020/01/13/Laravel-custom-guard/index.html">
+<meta property="og:title" content="抽象類別和介面">
+<meta property="og:url" content="http://yoursite.com/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="tags: Laravel6 Step 1 定義 guard  在 AuthServiceProvider 的 boot() 中 定義客製的 guard  1234567891011121314151617181920use Illuminate\Support\Facades\Auth;public function boot()    &amp;#123;        $this-&gt;regis">
+<meta property="og:description" content="Compare     類別（Class） 抽象類別（Abstract Class） 介面（Interface）     宣告屬性（attribute） ✓ ✓ ✖   常數（const） ✓ ✓ ✓   實例化（new class） ✓ ✖ ✖   抽象方法（abstract function） ✖ ✓ ✓   實作方法內容（functoin()） ✓ ✓ ✖   類別是否可繼承多個 ✖ ✖">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-13T04:17:18.000Z">
-<meta property="article:modified_time" content="2020-01-13T04:18:01.091Z">
+<meta property="article:published_time" content="2020-01-20T07:31:01.000Z">
+<meta property="article:modified_time" content="2020-01-20T08:31:01.862Z">
 <meta property="article:author" content="SarahCheng">
+<meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/13/Laravel-custom-guard/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/20/抽象類別和介面/"/>
 
 
 
 
 
-  <title>[Laravel]_custom_guard | Vegelephant's IT world</title>
+  <title>抽象類別和介面 | Vegelephant's IT world</title>
   
 
 
@@ -286,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/Laravel-custom-guard/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="SarahCheng">
@@ -303,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[Laravel]_custom_guard</h1>
+          <h1 class="post-title" itemprop="name headline">抽象類別和介面</h1>
         
 
         <div class="post-meta">
@@ -315,8 +316,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-13T12:17:18+08:00">
-                2020-01-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T15:31:01+08:00">
+                2020-01-20
               </time>
             
 
@@ -353,25 +354,99 @@
       
 
       
-        <h6 id="tags-Laravel6"><a class="header-anchor" href="#tags-Laravel6"></a>tags: <code>Laravel6</code></h6>
-<h2 id="Step-1-定義-guard"><a class="header-anchor" href="#Step-1-定義-guard"></a>Step 1 定義 guard</h2>
+        <h1>Compare</h1>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>類別（Class）</th>
+<th>抽象類別（Abstract Class）</th>
+<th>介面（Interface）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宣告屬性（attribute）</td>
+<td>✓</td>
+<td>✓</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>常數（const）</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>實例化（new class）</td>
+<td>✓</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>抽象方法（abstract function）</td>
+<td>✖</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>實作方法內容（functoin()）</td>
+<td>✓</td>
+<td>✓</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>類別是否可繼承多個</td>
+<td>✖</td>
+<td>✖</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<p>copy from <a href="https://kejyuntw.gitbooks.io/php-learning-notes/class/class-abstract-interface-compare.html" target="_blank" rel="noopener">php 學習筆記</a></p>
+<h1>抽象類別:</h1>
 <ul>
-<li>在 AuthServiceProvider 的 boot() 中 定義客製的 guard</li>
+<li>若有抽象函式，繼承該類別後一定要實作。沒實作 error:</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">use Illuminate\Support\Facades\Auth;</span><br><span class="line"></span><br><span class="line">public function boot()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;registerPolicies();</span><br><span class="line"></span><br><span class="line">        Auth::viaRequest(&#39;custom-token&#39;, function ($request) &#123;</span><br><span class="line">            </span><br><span class="line">            if (!$request-&gt;remember_token) &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                $user &#x3D;User::where(&#39;remember_token&#39;, $request-&gt;remember_token)-&gt;first();</span><br><span class="line">                if ($user) &#123;</span><br><span class="line">                    Auth::login($user);</span><br><span class="line">                    return $user;</span><br><span class="line">                &#125;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>如果 token 是對的，即有通過 if($user), 要記得<code>Auth::login($user);</code> 這樣之後使用 <code>Auth::user();</code> 才會有值</p>
+<p>PHP Fatal error:  Class Asian contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (Person_abstractclass::eat)</p>
 </blockquote>
-<h2 id="Step-2-更改-config-auth-php"><a class="header-anchor" href="#Step-2-更改-config-auth-php"></a>Step 2 更改 config/auth.php</h2>
 <ul>
-<li>將 guards 陣列中 api 的 driver 改為自訂的’custom-token’</li>
+<li>抽象類別不能實例化</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#39;guards&#39; &#x3D;&gt; [</span><br><span class="line">        &#39;api&#39; &#x3D;&gt; [</span><br><span class="line">            &#39;driver&#39; &#x3D;&gt; &#39;custom-token&#39;,</span><br><span class="line">            &#39;provider&#39; &#x3D;&gt; &#39;users&#39;,</span><br><span class="line">            &#39;hash&#39; &#x3D;&gt; true,</span><br><span class="line">        ],</span><br><span class="line">    ],</span><br></pre></td></tr></table></figure>
-<h2 id="Step-3-自製身份認證-Middleware"><a class="header-anchor" href="#Step-3-自製身份認證-Middleware"></a>Step 3 自製身份認證 Middleware</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">abstract class Person_abstractclass&#123;</span><br><span class="line">    abstract function eat();</span><br><span class="line">&#125;</span><br><span class="line">$sarah &#x3D; new Person_abstractclass();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>PHP Fatal error:  Uncaught Error: Cannot instantiate abstract class Person_ab</p>
+</blockquote>
 <ul>
-<li>在 Middleware 的 handle function 中 使用 Auth::guard()</li>
+<li>在建構子裡 echo 沒有用，在實例化的時候不會被印出來</li>
+<li>祖先有繼承該類別，不管多遠古， if($obj instanceof animal)都會過(true)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public function handle($request, Closure $next, $role)</span><br><span class="line">&#123;</span><br><span class="line">    try &#123;</span><br><span class="line">    </span><br><span class="line">        if (Auth::guard(&#39;api&#39;)-&gt;user()) &#123;</span><br><span class="line">            $request-&gt;merge([&#39;user&#39; &#x3D;&gt; Auth::user()]);</span><br><span class="line">        </span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">            </span><br><span class="line">                $credentials &#x3D; $request-&gt;only(&#39;name&#39;, &#39;password&#39;);</span><br><span class="line">                if (Auth::attempt($credentials,true)) &#123;</span><br><span class="line">                    $request-&gt;merge([&#39;user&#39; &#x3D;&gt; Auth::user()]);</span><br><span class="line">                    return $next($request);</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    return response()-&gt;json([&#39;result&#39;&#x3D;&gt;&#39;The token is unavailable. Please login again.&#39;]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125; catch (\Throwable $th) &#123;</span><br><span class="line">                return &quot;attempt error&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1>介面</h1>
+<ul>
+<li>是一種特殊的抽象類別，所有方法都是抽象的，所以不能實作，且一樣：
+<ol>
+<li>不能實例化</li>
+<li>類別實現後一定要將全部方法都實作</li>
+</ol>
+</li>
+<li>只有常數(const)，沒有屬性</li>
+<li>可以繼承(extends)介面</li>
+<li>一個類別可以實現(implements)多個介面</li>
+<li>父類有實現介面, 子類就也一定要實現該介面</li>
+</ul>
+<p>p.s. 介面和類別名稱不能相同</p>
+<blockquote>
+<p>PHP Fatal error:  Cannot declare class Person, because the name is already in use</p>
+</blockquote>
+<h1>類別</h1>
+<h2 id="建構式"><a class="header-anchor" href="#建構式"></a>建構式</h2>
+<ol>
+<li>設置預設屬性值</li>
+<li>預載函式功能</li>
+<li>通常為了避免父子產生誤會，可以在子物件的建構式用以下的做法： <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class demo extends CI_Controller()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">parent</span>::__construct();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;_init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//這才是真正寫建構式要預載功能的地方。</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
       
     </div>
     
@@ -386,6 +461,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
 
       
       
@@ -395,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/13/GCP-deploy-php-nginx-mysql/" rel="next" title="GCP_deploy_php_nginx_mysql">
-                <i class="fa fa-chevron-left"></i> GCP_deploy_php_nginx_mysql
+              <a href="/2020/01/13/Laravel-custom-guard/" rel="next" title="[Laravel]_custom_guard">
+                <i class="fa fa-chevron-left"></i> [Laravel]_custom_guard
               </a>
             
           </div>
@@ -404,10 +485,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/" rel="prev" title="抽象類別和介面">
-                抽象類別和介面 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -530,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#tags-Laravel6"><span class="nav-number">1.</span> <span class="nav-text">tags: Laravel6</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-定義-guard"><span class="nav-number"></span> <span class="nav-text">Step 1 定義 guard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-更改-config-auth-php"><span class="nav-number"></span> <span class="nav-text">Step 2 更改 config&#x2F;auth.php</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-自製身份認證-Middleware"><span class="nav-number"></span> <span class="nav-text">Step 3 自製身份認證 Middleware</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Compare</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">抽象類別:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">介面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">類別</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建構式"><span class="nav-number">4.1.</span> <span class="nav-text">建構式</span></a></li></ol></li></ol></div>
             
 
           </div>

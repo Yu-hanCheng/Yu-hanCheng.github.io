@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>抽象類別和介面</title>
+    <url>/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/</url>
+    <content><![CDATA[<h1>Compare</h1>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>類別（Class）</th>
+<th>抽象類別（Abstract Class）</th>
+<th>介面（Interface）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宣告屬性（attribute）</td>
+<td>✓</td>
+<td>✓</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>常數（const）</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>實例化（new class）</td>
+<td>✓</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>抽象方法（abstract function）</td>
+<td>✖</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>實作方法內容（functoin()）</td>
+<td>✓</td>
+<td>✓</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>類別是否可繼承多個</td>
+<td>✖</td>
+<td>✖</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<p>copy from <a href="https://kejyuntw.gitbooks.io/php-learning-notes/class/class-abstract-interface-compare.html" target="_blank" rel="noopener">php 學習筆記</a></p>
+<h1>抽象類別:</h1>
+<ul>
+<li>若有抽象函式，繼承該類別後一定要實作。沒實作 error:</li>
+</ul>
+<blockquote>
+<p>PHP Fatal error:  Class Asian contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (Person_abstractclass::eat)</p>
+</blockquote>
+<ul>
+<li>抽象類別不能實例化</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">abstract class Person_abstractclass&#123;</span><br><span class="line">    abstract function eat();</span><br><span class="line">&#125;</span><br><span class="line">$sarah &#x3D; new Person_abstractclass();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>PHP Fatal error:  Uncaught Error: Cannot instantiate abstract class Person_ab</p>
+</blockquote>
+<ul>
+<li>在建構子裡 echo 沒有用，在實例化的時候不會被印出來</li>
+<li>祖先有繼承該類別，不管多遠古， if($obj instanceof animal)都會過(true)</li>
+</ul>
+<h1>介面</h1>
+<ul>
+<li>是一種特殊的抽象類別，所有方法都是抽象的，所以不能實作，且一樣：
+<ol>
+<li>不能實例化</li>
+<li>類別實現後一定要將全部方法都實作</li>
+</ol>
+</li>
+<li>只有常數(const)，沒有屬性</li>
+<li>可以繼承(extends)介面</li>
+<li>一個類別可以實現(implements)多個介面</li>
+<li>父類有實現介面, 子類就也一定要實現該介面</li>
+</ul>
+<p>p.s. 介面和類別名稱不能相同</p>
+<blockquote>
+<p>PHP Fatal error:  Cannot declare class Person, because the name is already in use</p>
+</blockquote>
+<h1>類別</h1>
+<h2 id="建構式"><a class="header-anchor" href="#建構式"></a>建構式</h2>
+<ol>
+<li>設置預設屬性值</li>
+<li>預載函式功能</li>
+<li>通常為了避免父子產生誤會，可以在子物件的建構式用以下的做法： <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">class demo extends CI_Controller()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">parent</span>::__construct();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;_init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//這才是真正寫建構式要預載功能的地方。</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>PHP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Laravel]_custom_guard</title>
     <url>/2020/01/13/Laravel-custom-guard/</url>
     <content><![CDATA[<h6 id="tags-Laravel6"><a class="header-anchor" href="#tags-Laravel6"></a>tags: <code>Laravel6</code></h6>
