@@ -122,6 +122,9 @@
 <li>在 Middleware 的 handle function 中 使用 Auth::guard()</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public function handle($request, Closure $next, $role)</span><br><span class="line">&#123;</span><br><span class="line">    try &#123;</span><br><span class="line">    </span><br><span class="line">        if (Auth::guard(&#39;api&#39;)-&gt;user()) &#123;</span><br><span class="line">            $request-&gt;merge([&#39;user&#39; &#x3D;&gt; Auth::user()]);</span><br><span class="line">        </span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">            </span><br><span class="line">                $credentials &#x3D; $request-&gt;only(&#39;name&#39;, &#39;password&#39;);</span><br><span class="line">                if (Auth::attempt($credentials,true)) &#123;</span><br><span class="line">                    $request-&gt;merge([&#39;user&#39; &#x3D;&gt; Auth::user()]);</span><br><span class="line">                    return $next($request);</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    return response()-&gt;json([&#39;result&#39;&#x3D;&gt;&#39;The token is unavailable. Please login again.&#39;]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125; catch (\Throwable $th) &#123;</span><br><span class="line">                return &quot;attempt error&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Laravel</tag>
+      </tags>
   </entry>
   <entry>
     <title>GCP_deploy_php_nginx_mysql</title>
@@ -434,6 +437,9 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
 <strong>apache2</strong> apache2-bin apache2-data apache2-utils libapache2-mod-php7.3 …</p>
 </blockquote>
 ]]></content>
+      <tags>
+        <tag>GCP deploy</tag>
+      </tags>
   </entry>
   <entry>
     <title>SQL_join</title>
@@ -458,6 +464,9 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
 <hr>
 ]]></content>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
   </entry>
   <entry>
     <title>php_mysql_plugin</title>
@@ -642,6 +651,9 @@ C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank"
 <hr>
 <p>Thank you！^0^</p>
 ]]></content>
+      <tags>
+        <tag>PHP_plugin</tag>
+      </tags>
   </entry>
   <entry>
     <title>RegularExpression</title>
@@ -906,24 +918,8 @@ http://?</li>
 <hr>
 <h1>Thank You!</h1>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/01/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a class="header-anchor" href="#Quick-Start"></a>Quick Start</h2>
-<h3 id="Create-a-new-post"><a class="header-anchor" href="#Create-a-new-post"></a>Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a class="header-anchor" href="#Run-server"></a>Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a class="header-anchor" href="#Generate-static-files"></a>Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a class="header-anchor" href="#Deploy-to-remote-sites"></a>Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
+      <tags>
+        <tag>RegExp</tag>
+      </tags>
   </entry>
 </search>
