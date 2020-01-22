@@ -97,8 +97,11 @@
 <ol>
 <li>設置預設屬性值</li>
 <li>預載函式功能</li>
-<li>通常為了避免父子產生誤會，可以在子物件的建構式用以下的做法： <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">class demo extends CI_Controller()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">parent</span>::__construct();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;_init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//這才是真正寫建構式要預載功能的地方。</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>通常為了避免父子產生誤會，可以在子物件的建構式用以下的做法： <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">class demo extends CI_Controller()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">parent</span>::__construct();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;_init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//這才是真正寫建構式要預載功能的地方。</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
+<h2 id="清除"><a class="header-anchor" href="#清除"></a>清除</h2>
+<p><code>__destruct()</code></p>
 ]]></content>
       <tags>
         <tag>PHP</tag>
