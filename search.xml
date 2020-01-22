@@ -451,7 +451,9 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
   <entry>
     <title>SQL_join</title>
     <url>/2020/01/13/SQL-join/</url>
-    <content><![CDATA[<h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
+    <content><![CDATA[<h1>前言</h1>
+<p>簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。<a id="more"></a></p>
+<h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
 <ol>
 <li>班上國文80分以上，但數學不及格的同學有哪些</li>
 <li>Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些</li>
@@ -467,6 +469,23 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
 <hr>
 <p><a href="https://dotblogs.com.tw/brooke/2015/03/15/150726" target="_blank" rel="noopener">參考</a></p>
 <hr>
+<h2 id="牛刀小試"><a class="header-anchor" href="#牛刀小試"></a>牛刀小試</h2>
+<h3 id="Question"><a class="header-anchor" href="#Question"></a>Question</h3>
+<ol>
+<li>有修演算法，也有修人機互動課程的同學有哪些(Ａ:演算法名單,B: 人機互動名單）</li>
+<li>班上國文和數學都80分以上同學有哪些(Ａ：國文80分以上名單,B: 數學80分以上名單）</li>
+<li>班上國文80分以上，但數學不及格的同學有哪些（Ａ：國文分數表,B: 數學及格的名單）</li>
+<li>請列出魔法店中，Sarah 已經買過的商品（Ａ：有賣的商品列表, B:Sarah買過的商品列表）</li>
+<li>請列出魔法店中的所有魔法，並標記 Sarah 還沒買過的商品（Ａ: 魔法店的商品列表, B: Sarah買過的商品）</li>
+</ol>
+<h3 id="Answer"><a class="header-anchor" href="#Answer"></a>Answer</h3>
+<ol>
+<li>inner join</li>
+<li>inner join</li>
+<li>left exclusive join</li>
+<li>inner join</li>
+<li>left inclusive join</li>
+</ol>
 <h2 id="HOW"><a class="header-anchor" href="#HOW"></a>HOW</h2>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
 <hr>
@@ -665,19 +684,13 @@ C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank"
   <entry>
     <title>RegularExpression</title>
     <url>/2020/01/10/RegularExpression/</url>
-    <content><![CDATA[<h3 id="Outline"><a class="header-anchor" href="#Outline"></a>Outline</h3>
-<ul>
-<li>WHY</li>
-<li>WHAT</li>
-<li>HOW</li>
-</ul>
-<hr>
-<h1>Why</h1>
+    <content><![CDATA[<h1>Why</h1>
 <ul>
 <li>做過濾或驗證(錯誤,攻擊)</li>
 <li>規範或限制文字的格式</li>
 <li>提高效率</li>
 </ul>
+<a id="more"></a>
 <hr>
 <h1>What</h1>
 <p>描述了一種字串匹配的模式</p>

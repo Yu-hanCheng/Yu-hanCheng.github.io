@@ -40,22 +40,22 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
-  <meta name="description" content="WHY  班上國文80分以上，但數學不及格的同學有哪些 Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些   WHAT   Left join 會先取得所有的 Ａ， 那如果沒有相對應的 Ｂ ，就直接全部塞 null ， 他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』  參考  HOW 12345678$magics &#x3D; ShopMagic::where([">
+  <meta name="description" content="前言 簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL_join">
 <meta property="og:url" content="http://yoursite.com/2020/01/13/SQL-join/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="WHY  班上國文80分以上，但數學不及格的同學有哪些 Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些   WHAT   Left join 會先取得所有的 Ａ， 那如果沒有相對應的 Ｂ ，就直接全部塞 null ， 他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』  參考  HOW 12345678$magics &#x3D; ShopMagic::where([">
+<meta property="og:description" content="前言 簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/ZNsDRog.png">
 <meta property="article:published_time" content="2020-01-13T02:37:58.000Z">
-<meta property="article:modified_time" content="2020-01-20T08:33:22.941Z">
+<meta property="article:modified_time" content="2020-01-22T08:52:53.268Z">
 <meta property="article:author" content="SarahCheng">
 <meta property="article:tag" content="SQL">
 <meta name="twitter:card" content="summary">
@@ -75,6 +75,22 @@
 
   <title>SQL_join | Vegelephant's IT world</title>
   
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-156670460-1',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
 
 
 
@@ -141,14 +157,44 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
@@ -157,6 +203,8 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+
+  <a href="https://github.com/Yu-hanCheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -184,9 +232,9 @@
       <meta itemprop="name" content="Vegelephant's IT world">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           SQL_join
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -202,7 +250,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-20 16:33:22" itemprop="dateModified" datetime="2020-01-20T16:33:22+08:00">2020-01-20</time>
+                <time title="Modified: 2020-01-22 16:52:53" itemprop="dateModified" datetime="2020-01-22T16:52:53+08:00">2020-01-22</time>
               </span>
 
           
@@ -216,7 +264,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
+        <h1>前言</h1>
+<p>簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。<a id="more"></a></p>
+<h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
 <ol>
 <li>班上國文80分以上，但數學不及格的同學有哪些</li>
 <li>Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些</li>
@@ -232,6 +282,23 @@
 <hr>
 <p><a href="https://dotblogs.com.tw/brooke/2015/03/15/150726" target="_blank" rel="noopener">參考</a></p>
 <hr>
+<h2 id="牛刀小試"><a class="header-anchor" href="#牛刀小試"></a>牛刀小試</h2>
+<h3 id="Question"><a class="header-anchor" href="#Question"></a>Question</h3>
+<ol>
+<li>有修演算法，也有修人機互動課程的同學有哪些(Ａ:演算法名單,B: 人機互動名單）</li>
+<li>班上國文和數學都80分以上同學有哪些(Ａ：國文80分以上名單,B: 數學80分以上名單）</li>
+<li>班上國文80分以上，但數學不及格的同學有哪些（Ａ：國文分數表,B: 數學及格的名單）</li>
+<li>請列出魔法店中，Sarah 已經買過的商品（Ａ：有賣的商品列表, B:Sarah買過的商品列表）</li>
+<li>請列出魔法店中的所有魔法，並標記 Sarah 還沒買過的商品（Ａ: 魔法店的商品列表, B: Sarah買過的商品）</li>
+</ol>
+<h3 id="Answer"><a class="header-anchor" href="#Answer"></a>Answer</h3>
+<ol>
+<li>inner join</li>
+<li>inner join</li>
+<li>left exclusive join</li>
+<li>inner join</li>
+<li>left inclusive join</li>
+</ol>
 <h2 id="HOW"><a class="header-anchor" href="#HOW"></a>HOW</h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
 <hr>
@@ -248,6 +315,11 @@
           </div>
 
         
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
 
 
         
@@ -319,7 +391,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WHY"><span class="nav-number">1.</span> <span class="nav-text">WHY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WHAT"><span class="nav-number">2.</span> <span class="nav-text">WHAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Left-join"><span class="nav-number">3.</span> <span class="nav-text">Left join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW"><span class="nav-number">4.</span> <span class="nav-text">HOW</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WHY"><span class="nav-number">1.1.</span> <span class="nav-text">WHY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WHAT"><span class="nav-number">1.2.</span> <span class="nav-text">WHAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Left-join"><span class="nav-number">1.3.</span> <span class="nav-text">Left join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#牛刀小試"><span class="nav-number">1.4.</span> <span class="nav-text">牛刀小試</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Question"><span class="nav-number">1.4.1.</span> <span class="nav-text">Question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Answer"><span class="nav-number">1.4.2.</span> <span class="nav-text">Answer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW"><span class="nav-number">1.5.</span> <span class="nav-text">HOW</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -339,11 +411,20 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yu-hanCheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yu-hanCheng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100001561720922" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100001561720922" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
 
 
 
@@ -410,6 +491,30 @@
   
 
 
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 22968,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
