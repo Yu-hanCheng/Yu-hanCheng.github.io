@@ -616,6 +616,7 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -676,14 +677,14 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -794,6 +795,26 @@ PS:若出現下列錯誤 <a href="https://www.jianshu.com/p/4f8b57632e2b" target
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '5180802716154a1ed8e3',
+      clientSecret: 'a0967c5a54ee4ea7ca3ade99a505a84debe6a482',
+      repo: 'yu-hancheng.github.io',
+      owner: 'yu-hancheng',
+      admin: ['yu-hancheng'],
+      id: 'ed2fa70927dd91380afe1a2ace5f37a2',
+        language: 'zh-TW',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
