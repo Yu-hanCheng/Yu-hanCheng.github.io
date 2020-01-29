@@ -46,22 +46,25 @@
   };
 </script>
 
-  <meta name="description" content="Why  做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率">
+  <meta name="description" content="前言 讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RegularExpression">
-<meta property="og:url" content="http://yoursite.com/2020/01/10/RegularExpression/index.html">
+<meta property="og:title" content="Github Actions SSH CI">
+<meta property="og:url" content="http://yoursite.com/2020/01/29/Github-Actions-SSH-CI/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="Why  做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率">
+<meta property="og:description" content="前言 讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg">
-<meta property="article:published_time" content="2020-01-10T08:30:20.000Z">
-<meta property="article:modified_time" content="2020-01-22T08:54:41.734Z">
+<meta property="og:image" content="https://i.imgur.com/sNoMlWf.png">
+<meta property="og:image" content="https://i.imgur.com/Ye8WZmW.png">
+<meta property="article:published_time" content="2020-01-29T07:38:26.000Z">
+<meta property="article:modified_time" content="2020-01-29T10:26:10.152Z">
 <meta property="article:author" content="SarahCheng">
-<meta property="article:tag" content="RegExp">
+<meta property="article:tag" content="Github Actions">
+<meta property="article:tag" content="SSH Actions">
+<meta property="article:tag" content="CI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg">
+<meta name="twitter:image" content="https://i.imgur.com/sNoMlWf.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/10/RegularExpression/">
+<link rel="canonical" href="http://yoursite.com/2020/01/29/Github-Actions-SSH-CI/">
 
 
 <script id="page-configurations">
@@ -73,7 +76,7 @@
   };
 </script>
 
-  <title>RegularExpression | Vegelephant's IT world</title>
+  <title>Github Actions SSH CI | Vegelephant's IT world</title>
   
     <script>
       function sendPageView() {
@@ -220,7 +223,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/RegularExpression/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Github-Actions-SSH-CI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -233,7 +236,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          RegularExpression
+          Github Actions SSH CI
         </h1>
 
         <div class="post-meta">
@@ -242,16 +245,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-01-10 16:30:20" itemprop="dateCreated datePublished" datetime="2020-01-10T16:30:20+08:00">2020-01-10</time>
+              <time title="Created: 2020-01-29 15:38:26 / Modified: 18:26:10" itemprop="dateCreated datePublished" datetime="2020-01-29T15:38:26+08:00">2020-01-29</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-22 16:54:41" itemprop="dateModified" datetime="2020-01-22T16:54:41+08:00">2020-01-22</time>
-              </span>
 
           
 
@@ -264,259 +261,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>Why</h1>
-<ul>
-<li>做過濾或驗證(錯誤,攻擊)</li>
-<li>規範或限制文字的格式</li>
-<li>提高效率</li>
-</ul>
-<a id="more"></a>
-<hr>
-<h1>What</h1>
-<p>描述了一種字串匹配的模式</p>
-<hr>
-<h1>POSIX VS PERL</h1>
-<style>
-.reveal {
-  font-size: 24px;
-}
-</style>
-<ol>
-<li>The POSIX functions find the longest of the leftmost match, but PCRE stops on the first valid match</li>
-<li>As of PHP 5.3.0, the POSIX Regex extension is deprecated</li>
-</ol>
-<!-- from [Differences from POSIX regex](https://www.php.net/manual/en/reference.pcre.pattern.posix.php)
- -->
-<table>
-<thead>
-<tr>
-<th>POSIX</th>
-<th>PCRE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ereg_replace()、eregi_replace()</td>
-<td>preg_replace()</td>
-</tr>
-<tr>
-<td>ereg()、eregi()</td>
-<td>preg_match()</td>
-</tr>
-<tr>
-<td>split()、 spliti()</td>
-<td>preg_split()</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Android"><a class="header-anchor" href="#Android"></a>Android</h2>
-<ul>
-<li>Kotlin 用 JVM 的 lib，所以 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank" rel="noopener">Pattern</a> 同原生 Java</li>
-</ul>
-<h2 id="IOS"><a class="header-anchor" href="#IOS"></a>IOS</h2>
-<ul>
-<li>Swift 用 ICU engine， <a href="http://userguide.icu-project.org/strings/regexp" target="_blank" rel="noopener">Pattern</a></li>
-</ul>
-<hr>
-<h1>How</h1>
-<p>描述一種字串匹配的模式</p>
-<ul>
-<li>
-<p>delimiter</p>
-<ul>
-<li><code>/^[^0-9]$/</code></li>
-<li><code>#^[^0-9]$#</code></li>
-<li><code>+^[^0-9]$+</code></li>
-<li><code>%^[^0-9]$%</code></li>
-<li><code>[^[^0-9]$]</code></li>
-<li><code>(^[^0-9]$)</code></li>
-<li><code>{^[^0-9]$}</code></li>
-</ul>
-</li>
-<li>
-<p>中括號<code>[]</code> 內沒有順序，是&quot;或&quot;的概念</p>
-<ul>
-<li><code>[a-zA-Z0-9]	數字 或 大小寫字母</code></li>
-</ul>
-</li>
-<li>
-<p>開頭 <code>＾</code>  結尾 <code>$</code> (在中括號外的意義)</p>
-</li>
-<li>
-<p>[]: 括號內的任何字元<br>
-[^]: 不在括號內的任何字元</p>
-</li>
-</ul>
-<hr>
-<h1>Meta-characters</h1>
-<table>
-<thead>
-<tr>
-<th>重複表示</th>
-<th>規則</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>?</td>
-<td>未出現或出現一次</td>
-</tr>
-<tr>
-<td>*</td>
-<td>未出現或出現多次</td>
-</tr>
-<tr>
-<td>+</td>
-<td>出現一次或多次</td>
-</tr>
-<tr>
-<td>{a}</td>
-<td>出現 a 次</td>
-</tr>
-<tr>
-<td>{a,}</td>
-<td>至少出現 a 次以上</td>
-</tr>
-<tr>
-<td>{,b}</td>
-<td>最多出現 b 次</td>
-</tr>
-<tr>
-<td>{a,b}</td>
-<td>最少出現 a 次, 最多出現 b 次</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h1>Meta-characters 牛刀小試</h1>
-<ul>
-<li>
-<p><code>/a?/</code></p>
-<ul>
-<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0"> 1. “c”</label></li>
-<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1"> 2. “”</label></li>
-<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2"> 3. “app”</label></li>
-</ul>
-</li>
-<li>
-<p><code>/123a{1,2}/</code></p>
-<ul>
-<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> 1. “123”</label></li>
-<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4"> 2. “123aaa”</label></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h1>特殊字元</h1>
-<ul>
-<li><code>|</code> 是或的意思</li>
-<li><img src="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg" alt=""></li>
-</ul>
-<hr>
-<h1>特殊字元 牛刀小試</h1>
-<ul>
-<li>2020 GO</li>
-</ul>
-<ul>
-<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5"></label><code>[0-9]{3,}|\D$</code></li>
-<li><input type="checkbox" id="checkbox6"><label for="checkbox6"></label><code>[0-9]{3,}\D$</code></li>
-</ul>
-<hr>
-<ul>
-<li>檢查是不是英數混和字串<br>
-<code>$pattern = &quot;/^([0-9A-Za-z]+)$/&quot;;</code></li>
-<li>檢查是不是中文
-<ul>
-<li>\X 是 an extended Unicode sequence<br>
-<code>$pattern = &quot;/^[\x{4E00}-\x{9FFF}]+$/u&quot;;</code><br>
-<code>$pattern = &quot;/^([\u4E00-\u9FFF]+)$/&quot;;</code></li>
-</ul>
-</li>
-</ul>
-<hr>
-<ul>
-<li>
-<p>Big 5:</p>
-<ol>
-<li>每個中文字使用 2 bytes</li>
-<li>部分文字用到了控制碼 所以許多程式與軟體都會有許、蓋、功這類中文字的沖碼問題</li>
-<li>延伸字集中，有簡體字但是沒有定義日文字</li>
-</ol>
-</li>
-<li>
-<p>UTF-8 :</p>
-<ol>
-<li>採用變動大小，中文字使用 3 bytes，英文則維持 1 byte 因此若轉碼後，資料庫整體會變成 1.5 倍大，200MB(Big5) -&gt; 300MB(UTF-8)</li>
-<li>支援所有語言文字，還有一些怪怪圖形</li>
-<li>簡體與正體中文重複字只定義一次，例如說，簡體的”山”，跟正體的”山” 是同一個 UTF-8 編碼</li>
-</ol>
-</li>
-</ul>
-<hr>
-<pre><code>   ![](https://i.imgur.com/D37wa4P.png)
+        <h1>前言</h1>
+<p>讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。 <a id="more"></a><br>
+本篇實作皆參考<a href="https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets" target="_blank" rel="noopener">官方文件</a><br>
+若還沒使用過 Action 可以先參考<a href="https://yu-hancheng.github.io/2020/01/13/Github-Actions/" target="_blank" rel="noopener">這篇</a></p>
+<h1>步驟</h1>
+<h2 id="1-開啟一個-GCE"><a class="header-anchor" href="#1-開啟一個-GCE"></a>1. 開啟一個 GCE</h2>
+<h2 id="2-從本機端-ssh-連線到-GCE"><a class="header-anchor" href="#2-從本機端-ssh-連線到-GCE"></a>2. 從本機端 ssh 連線到 GCE</h2>
+<pre><code>* 使用官方的連線指令 `gcloud beta compute --project &quot;xxx&quot; ssh --zone &quot;xxx&quot; &quot;xxxx&quot;`
+&gt; 自動產生新的一組 key （google_compute_engine）
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">WARNING: The private SSH key file for gcloud does not exist.</span><br><span class="line">WARNING: Your SSH key files are broken.</span><br><span class="line">private key (NOT FOUND) [&#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine]</span><br><span class="line">public key  (OK)        [&#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine.pub]</span><br><span class="line">We are going to overwrite all above files.</span><br><span class="line">Do you want to continue (y&#x2F;N)?   y</span><br><span class="line"></span><br><span class="line">Generating public&#x2F;private rsa key pair.</span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">&#x3D;&#x3D;Your identification has been saved in &#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine.&#x3D;&#x3D;</span><br><span class="line">Your public key has been saved in &#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:sAVwcUrBTRHaTVL+iZHw923tXSC9jkwu5JX2HBHyb8s </span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+* 測試用自動產生的 ssh key 連線: `ssh -i ~/.ssh/google_compute_engine sarahcheng@35.229.180.75` 確定 key 可以用
 </code></pre>
-<hr>
-<h1>Regex Online</h1>
-<p>https://regex101.com/<br>
-https://rubular.com/</p>
-<hr>
-<h1>考前總複習，趕緊抱佛腳XD</h1>
+<h2 id="3-建立-github-專案，產生-action-範本，接著-git-clone-至本機端和遠端"><a class="header-anchor" href="#3-建立-github-專案，產生-action-範本，接著-git-clone-至本機端和遠端"></a>3. 建立 github 專案，產生 action 範本，接著 git clone 至本機端和遠端</h2>
 <ul>
-<li>2020-01-09
-<ul>
-<li>年-
-<ul>
-<li><code>/^(d{4})-/</code></li>
+<li>clone 用 https 比較省事</li>
 </ul>
-</li>
-<li>月-
-<ul>
-<li><code>/((0([1-9]{1}))|(1[1|2]))-/</code></li>
-</ul>
-</li>
-<li>日
-<ul>
-<li><code>/(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>併起來：<code>/^(d{4})-((0([1-9]{1}))|(1[1|2]))-(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></p>
-<hr>
-<ul>
-<li>URL(不是完整的)
-<ul>
-<li><code>/^(http(s)?:\/\/)?/</code></li>
-<li><code>/[\w.-]+(\.[\w.-]+)+/</code></li>
-<li><code>/[\w\-\._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$/</code></li>
-</ul>
-</li>
-</ul>
-<p>併起來：<code>^(http(s)?:\/\/)?[\w.-]+(\.[\w.-]+)+[\w-._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$</code></p>
-<blockquote>
-<ul>
-<li>應該要通過：<br>
-http://regex_101.com+<br>
-www.example.com<br>
-example.com<br>
-https://255.255.255.255<br>
-http://foo.com/blah_(wikipedia)#cite-1<br>
-https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux</li>
-<li>不能通過：<br>
-http:// shouldfail.com<br>
-http://.<br>
-http://?</li>
-</ul>
-</blockquote>
-<ul>
-<li><a href="https://mathiasbynens.be/demo/url-regex" target="_blank" rel="noopener">超多 URL REGEX 參考</a></li>
-</ul>
-<!-- /“^http:\/\/([\w-]+\.)+[\w-]+([\w- ./?%&=]*)?”/
-^http:\/\/(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*)) *(\\?\\S*)?$
- -->
-<hr>
-<h1>Thank You!</h1>
+<h2 id="4-將-key-加密"><a class="header-anchor" href="#4-將-key-加密"></a>4. 將 key 加密</h2>
+<ol>
+<li>用 gpg 加密 <code>gpg --symmetric --cipher-algo AES256 ~/.ssh/google_compute_engine</code></li>
+<li>輸入 passphrase （test）<br>
+<img src="https://i.imgur.com/sNoMlWf.png" alt=""></li>
+<li>將加密後的 key 複製到專案底下 <code>mv ~/.ssh/google_compute_engine.gpg ~/xxx/xxx/google_compute_engine.gpg</code></li>
+</ol>
+<h2 id="5-修改-Actions-腳本-github-workflows-main-yml"><a class="header-anchor" href="#5-修改-Actions-腳本-github-workflows-main-yml"></a>5. 修改 Actions 腳本(.github/workflows/main.yml)</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- name: decrypt</span><br><span class="line">  run: |</span><br><span class="line">    mkdir $HOME&#x2F;secrets</span><br><span class="line">    gpg --quiet --batch --yes --decrypt --passphrase&#x3D;&quot;$PASSPHRASE&quot; \</span><br><span class="line">    --output $HOME&#x2F;secrets&#x2F;key kkey.gpg</span><br><span class="line">  env:</span><br><span class="line">    PASSPHRASE: $&#123;&#123; secrets.PASSPHRASE &#125;&#125;</span><br><span class="line">- name: test printing</span><br><span class="line">  run: cat $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: chmod</span><br><span class="line">  run: chmod 600 $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: ssh</span><br><span class="line">  run: ssh -o StrictHostKeyChecking&#x3D;no -i $HOME&#x2F;secrets&#x2F;key sarahcheng@104.199.244.213 &quot;cd cicd_test&#x2F;;git pull&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="6-到-github-settings-頁面設定-secrets"><a class="header-anchor" href="#6-到-github-settings-頁面設定-secrets"></a>6. 到 github settings 頁面設定 secrets</h2>
+<p><img src="https://i.imgur.com/Ye8WZmW.png" alt=""></p>
+<h2 id="7-新增一個-file-並-push，最後到遠端查看"><a class="header-anchor" href="#7-新增一個-file-並-push，最後到遠端查看"></a>7. 新增一個 file 並 push，最後到遠端查看</h2>
+<p>ＯＫ</p>
 
     </div>
 
@@ -526,7 +300,9 @@ http://?</li>
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/RegExp/" rel="tag"># RegExp</a>
+              <a href="/tags/Github-Actions/" rel="tag"># Github Actions</a>
+              <a href="/tags/SSH-Actions/" rel="tag"># SSH Actions</a>
+              <a href="/tags/CI/" rel="tag"># CI</a>
           </div>
 
         
@@ -539,10 +315,13 @@ http://?</li>
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/01/13/php-mysql-plugin/" rel="next" title="php_mysql_plugin">
-      php_mysql_plugin <i class="fa fa-chevron-right"></i>
+    <a href="/2020/01/29/SSH/" rel="prev" title="SSH">
+      <i class="fa fa-chevron-left"></i> SSH
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/29/Github-Actions/" rel="next" title="Github Actions">
+      Github Actions <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -604,7 +383,7 @@ http://?</li>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">POSIX VS PERL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android"><span class="nav-number">3.1.</span> <span class="nav-text">Android</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS"><span class="nav-number">3.2.</span> <span class="nav-text">IOS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">How</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Meta-characters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">Meta-characters 牛刀小試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">特殊字元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">8.</span> <span class="nav-text">特殊字元 牛刀小試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">9.</span> <span class="nav-text">Regex Online</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">10.</span> <span class="nav-text">考前總複習，趕緊抱佛腳XD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">11.</span> <span class="nav-text">Thank You!</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-開啟一個-GCE"><span class="nav-number">2.1.</span> <span class="nav-text">1. 開啟一個 GCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-從本機端-ssh-連線到-GCE"><span class="nav-number">2.2.</span> <span class="nav-text">2. 從本機端 ssh 連線到 GCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-建立-github-專案，產生-action-範本，接著-git-clone-至本機端和遠端"><span class="nav-number">2.3.</span> <span class="nav-text">3. 建立 github 專案，產生 action 範本，接著 git clone 至本機端和遠端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-將-key-加密"><span class="nav-number">2.4.</span> <span class="nav-text">4. 將 key 加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-修改-Actions-腳本-github-workflows-main-yml"><span class="nav-number">2.5.</span> <span class="nav-text">5. 修改 Actions 腳本(.github&#x2F;workflows&#x2F;main.yml)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-到-github-settings-頁面設定-secrets"><span class="nav-number">2.6.</span> <span class="nav-text">6. 到 github settings 頁面設定 secrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-新增一個-file-並-push，最後到遠端查看"><span class="nav-number">2.7.</span> <span class="nav-text">7. 新增一個 file 並 push，最後到遠端查看</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -748,7 +527,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo: 'yu-hancheng.github.io',
       owner: 'yu-hancheng',
       admin: ['yu-hancheng'],
-      id: 'b3de2c565a2507453b4a9e5cca5fd4da',
+      id: 'ffc571ffd4102fc1533abf08090a1e93',
         language: 'zh-TW',
       distractionFreeMode: true
     });

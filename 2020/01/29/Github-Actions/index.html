@@ -46,22 +46,27 @@
   };
 </script>
 
-  <meta name="description" content="Why  做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率">
+  <meta name="description" content="前言 執行最簡單的 Hello world 範本測試 Actions 的使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RegularExpression">
-<meta property="og:url" content="http://yoursite.com/2020/01/10/RegularExpression/index.html">
+<meta property="og:title" content="Github Actions">
+<meta property="og:url" content="http://yoursite.com/2020/01/29/Github-Actions/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="Why  做過濾或驗證(錯誤,攻擊) 規範或限制文字的格式 提高效率">
+<meta property="og:description" content="前言 執行最簡單的 Hello world 範本測試 Actions 的使用">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg">
-<meta property="article:published_time" content="2020-01-10T08:30:20.000Z">
-<meta property="article:modified_time" content="2020-01-22T08:54:41.734Z">
+<meta property="og:image" content="https://i.imgur.com/1UnR388.png">
+<meta property="og:image" content="https://i.imgur.com/Sh1T8ET.png">
+<meta property="og:image" content="https://i.imgur.com/BYxUyEK.png">
+<meta property="og:image" content="https://i.imgur.com/cleSxwA.png">
+<meta property="og:image" content="https://i.imgur.com/LX0b6c5.png">
+<meta property="og:image" content="https://i.imgur.com/axxSWSd.png">
+<meta property="article:published_time" content="2020-01-29T08:49:49.000Z">
+<meta property="article:modified_time" content="2020-01-29T09:29:54.145Z">
 <meta property="article:author" content="SarahCheng">
-<meta property="article:tag" content="RegExp">
+<meta property="article:tag" content="Github Actions">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg">
+<meta name="twitter:image" content="https://i.imgur.com/1UnR388.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/10/RegularExpression/">
+<link rel="canonical" href="http://yoursite.com/2020/01/29/Github-Actions/">
 
 
 <script id="page-configurations">
@@ -73,7 +78,7 @@
   };
 </script>
 
-  <title>RegularExpression | Vegelephant's IT world</title>
+  <title>Github Actions | Vegelephant's IT world</title>
   
     <script>
       function sendPageView() {
@@ -220,7 +225,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/RegularExpression/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Github-Actions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -233,7 +238,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          RegularExpression
+          Github Actions
         </h1>
 
         <div class="post-meta">
@@ -242,16 +247,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-01-10 16:30:20" itemprop="dateCreated datePublished" datetime="2020-01-10T16:30:20+08:00">2020-01-10</time>
+              <time title="Created: 2020-01-29 16:49:49 / Modified: 17:29:54" itemprop="dateCreated datePublished" datetime="2020-01-29T16:49:49+08:00">2020-01-29</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-22 16:54:41" itemprop="dateModified" datetime="2020-01-22T16:54:41+08:00">2020-01-22</time>
-              </span>
 
           
 
@@ -264,259 +263,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>Why</h1>
-<ul>
-<li>做過濾或驗證(錯誤,攻擊)</li>
-<li>規範或限制文字的格式</li>
-<li>提高效率</li>
-</ul>
-<a id="more"></a>
-<hr>
-<h1>What</h1>
-<p>描述了一種字串匹配的模式</p>
-<hr>
-<h1>POSIX VS PERL</h1>
-<style>
-.reveal {
-  font-size: 24px;
-}
-</style>
+        <h1>前言</h1>
+<p>執行最簡單的 Hello world 範本測試 Actions 的使用 <a id="more"></a></p>
+<h2 id="1-建立一個-Github-專案"><a class="header-anchor" href="#1-建立一個-Github-專案"></a>1 建立一個 Github 專案</h2>
 <ol>
-<li>The POSIX functions find the longest of the leftmost match, but PCRE stops on the first valid match</li>
-<li>As of PHP 5.3.0, the POSIX Regex extension is deprecated</li>
+<li>點 Actions tab</li>
+<li>建立自己的 workflow<br>
+<img src="https://i.imgur.com/1UnR388.png" alt=""></li>
+<li>直接採用範本（ git push 時執行腳本）<br>
+<img src="https://i.imgur.com/Sh1T8ET.png" alt=""></li>
+<li>接著可以看到 Actions 有一筆觸發<br>
+<img src="https://i.imgur.com/BYxUyEK.png" alt=""></li>
+<li>如果執行成功會是綠色的，可點 build 看詳細 log<br>
+<img src="https://i.imgur.com/cleSxwA.png" alt=""></li>
 </ol>
-<!-- from [Differences from POSIX regex](https://www.php.net/manual/en/reference.pcre.pattern.posix.php)
- -->
-<table>
-<thead>
-<tr>
-<th>POSIX</th>
-<th>PCRE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ereg_replace()、eregi_replace()</td>
-<td>preg_replace()</td>
-</tr>
-<tr>
-<td>ereg()、eregi()</td>
-<td>preg_match()</td>
-</tr>
-<tr>
-<td>split()、 spliti()</td>
-<td>preg_split()</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Android"><a class="header-anchor" href="#Android"></a>Android</h2>
-<ul>
-<li>Kotlin 用 JVM 的 lib，所以 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank" rel="noopener">Pattern</a> 同原生 Java</li>
-</ul>
-<h2 id="IOS"><a class="header-anchor" href="#IOS"></a>IOS</h2>
-<ul>
-<li>Swift 用 ICU engine， <a href="http://userguide.icu-project.org/strings/regexp" target="_blank" rel="noopener">Pattern</a></li>
-</ul>
-<hr>
-<h1>How</h1>
-<p>描述一種字串匹配的模式</p>
-<ul>
-<li>
-<p>delimiter</p>
-<ul>
-<li><code>/^[^0-9]$/</code></li>
-<li><code>#^[^0-9]$#</code></li>
-<li><code>+^[^0-9]$+</code></li>
-<li><code>%^[^0-9]$%</code></li>
-<li><code>[^[^0-9]$]</code></li>
-<li><code>(^[^0-9]$)</code></li>
-<li><code>{^[^0-9]$}</code></li>
-</ul>
-</li>
-<li>
-<p>中括號<code>[]</code> 內沒有順序，是&quot;或&quot;的概念</p>
-<ul>
-<li><code>[a-zA-Z0-9]	數字 或 大小寫字母</code></li>
-</ul>
-</li>
-<li>
-<p>開頭 <code>＾</code>  結尾 <code>$</code> (在中括號外的意義)</p>
-</li>
-<li>
-<p>[]: 括號內的任何字元<br>
-[^]: 不在括號內的任何字元</p>
-</li>
-</ul>
-<hr>
-<h1>Meta-characters</h1>
-<table>
-<thead>
-<tr>
-<th>重複表示</th>
-<th>規則</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>?</td>
-<td>未出現或出現一次</td>
-</tr>
-<tr>
-<td>*</td>
-<td>未出現或出現多次</td>
-</tr>
-<tr>
-<td>+</td>
-<td>出現一次或多次</td>
-</tr>
-<tr>
-<td>{a}</td>
-<td>出現 a 次</td>
-</tr>
-<tr>
-<td>{a,}</td>
-<td>至少出現 a 次以上</td>
-</tr>
-<tr>
-<td>{,b}</td>
-<td>最多出現 b 次</td>
-</tr>
-<tr>
-<td>{a,b}</td>
-<td>最少出現 a 次, 最多出現 b 次</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h1>Meta-characters 牛刀小試</h1>
-<ul>
-<li>
-<p><code>/a?/</code></p>
-<ul>
-<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0"> 1. “c”</label></li>
-<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1"> 2. “”</label></li>
-<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2"> 3. “app”</label></li>
-</ul>
-</li>
-<li>
-<p><code>/123a{1,2}/</code></p>
-<ul>
-<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> 1. “123”</label></li>
-<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4"> 2. “123aaa”</label></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h1>特殊字元</h1>
-<ul>
-<li><code>|</code> 是或的意思</li>
-<li><img src="https://miro.medium.com/max/1216/1*WxHOk0kKw1vVQ50k23JoyA.jpeg" alt=""></li>
-</ul>
-<hr>
-<h1>特殊字元 牛刀小試</h1>
-<ul>
-<li>2020 GO</li>
-</ul>
-<ul>
-<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5"></label><code>[0-9]{3,}|\D$</code></li>
-<li><input type="checkbox" id="checkbox6"><label for="checkbox6"></label><code>[0-9]{3,}\D$</code></li>
-</ul>
-<hr>
-<ul>
-<li>檢查是不是英數混和字串<br>
-<code>$pattern = &quot;/^([0-9A-Za-z]+)$/&quot;;</code></li>
-<li>檢查是不是中文
-<ul>
-<li>\X 是 an extended Unicode sequence<br>
-<code>$pattern = &quot;/^[\x{4E00}-\x{9FFF}]+$/u&quot;;</code><br>
-<code>$pattern = &quot;/^([\u4E00-\u9FFF]+)$/&quot;;</code></li>
-</ul>
-</li>
-</ul>
-<hr>
-<ul>
-<li>
-<p>Big 5:</p>
+<h2 id="2-git-clone-到本機端"><a class="header-anchor" href="#2-git-clone-到本機端"></a>2 git clone 到本機端</h2>
 <ol>
-<li>每個中文字使用 2 bytes</li>
-<li>部分文字用到了控制碼 所以許多程式與軟體都會有許、蓋、功這類中文字的沖碼問題</li>
-<li>延伸字集中，有簡體字但是沒有定義日文字</li>
-</ol>
+<li>
+<p>執行任意一個 push 測試看看<br>
+本機端新增 README.md 並 push。 回到 github 頁面可以看到多一筆觸發。<br>
+<img src="https://i.imgur.com/LX0b6c5.png" alt=""></p>
 </li>
 <li>
-<p>UTF-8 :</p>
-<ol>
-<li>採用變動大小，中文字使用 3 bytes，英文則維持 1 byte 因此若轉碼後，資料庫整體會變成 1.5 倍大，200MB(Big5) -&gt; 300MB(UTF-8)</li>
-<li>支援所有語言文字，還有一些怪怪圖形</li>
-<li>簡體與正體中文重複字只定義一次，例如說，簡體的”山”，跟正體的”山” 是同一個 UTF-8 編碼</li>
+<p>看詳細 log，可以點三角形展開訊息<br>
+<img src="https://i.imgur.com/axxSWSd.png" alt=""></p>
+</li>
 </ol>
-</li>
-</ul>
-<hr>
-<pre><code>   ![](https://i.imgur.com/D37wa4P.png)
-</code></pre>
-<hr>
-<h1>Regex Online</h1>
-<p>https://regex101.com/<br>
-https://rubular.com/</p>
-<hr>
-<h1>考前總複習，趕緊抱佛腳XD</h1>
-<ul>
-<li>2020-01-09
-<ul>
-<li>年-
-<ul>
-<li><code>/^(d{4})-/</code></li>
-</ul>
-</li>
-<li>月-
-<ul>
-<li><code>/((0([1-9]{1}))|(1[1|2]))-/</code></li>
-</ul>
-</li>
-<li>日
-<ul>
-<li><code>/(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>併起來：<code>/^(d{4})-((0([1-9]{1}))|(1[1|2]))-(([0-2]([1- 9]{1}))|(3[0|1]))$/</code></p>
-<hr>
-<ul>
-<li>URL(不是完整的)
-<ul>
-<li><code>/^(http(s)?:\/\/)?/</code></li>
-<li><code>/[\w.-]+(\.[\w.-]+)+/</code></li>
-<li><code>/[\w\-\._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$/</code></li>
-</ul>
-</li>
-</ul>
-<p>併起來：<code>^(http(s)?:\/\/)?[\w.-]+(\.[\w.-]+)+[\w-._~:\/?#\[\]@!\$&amp;'\(\)\*\+,;=.]+$</code></p>
-<blockquote>
-<ul>
-<li>應該要通過：<br>
-http://regex_101.com+<br>
-www.example.com<br>
-example.com<br>
-https://255.255.255.255<br>
-http://foo.com/blah_(wikipedia)#cite-1<br>
-https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux</li>
-<li>不能通過：<br>
-http:// shouldfail.com<br>
-http://.<br>
-http://?</li>
-</ul>
-</blockquote>
-<ul>
-<li><a href="https://mathiasbynens.be/demo/url-regex" target="_blank" rel="noopener">超多 URL REGEX 參考</a></li>
-</ul>
-<!-- /“^http:\/\/([\w-]+\.)+[\w-]+([\w- ./?%&=]*)?”/
-^http:\/\/(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*)) *(\\?\\S*)?$
- -->
-<hr>
-<h1>Thank You!</h1>
 
     </div>
 
@@ -526,7 +298,7 @@ http://?</li>
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/RegExp/" rel="tag"># RegExp</a>
+              <a href="/tags/Github-Actions/" rel="tag"># Github Actions</a>
           </div>
 
         
@@ -539,11 +311,11 @@ http://?</li>
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/01/13/php-mysql-plugin/" rel="next" title="php_mysql_plugin">
-      php_mysql_plugin <i class="fa fa-chevron-right"></i>
+    <a href="/2020/01/29/Github-Actions-SSH-CI/" rel="prev" title="Github Actions SSH CI">
+      <i class="fa fa-chevron-left"></i> Github Actions SSH CI
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -604,7 +376,7 @@ http://?</li>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">POSIX VS PERL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android"><span class="nav-number">3.1.</span> <span class="nav-text">Android</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS"><span class="nav-number">3.2.</span> <span class="nav-text">IOS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">How</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Meta-characters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">Meta-characters 牛刀小試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">特殊字元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">8.</span> <span class="nav-text">特殊字元 牛刀小試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">9.</span> <span class="nav-text">Regex Online</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">10.</span> <span class="nav-text">考前總複習，趕緊抱佛腳XD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">11.</span> <span class="nav-text">Thank You!</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-建立一個-Github-專案"><span class="nav-number">1.1.</span> <span class="nav-text">1 建立一個 Github 專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-git-clone-到本機端"><span class="nav-number">1.2.</span> <span class="nav-text">2 git clone 到本機端</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -748,7 +520,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo: 'yu-hancheng.github.io',
       owner: 'yu-hancheng',
       admin: ['yu-hancheng'],
-      id: 'b3de2c565a2507453b4a9e5cca5fd4da',
+      id: '65e69031450861495731033a5e337ef8',
         language: 'zh-TW',
       distractionFreeMode: true
     });
