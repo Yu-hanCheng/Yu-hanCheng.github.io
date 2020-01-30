@@ -56,7 +56,7 @@
 <meta property="og:image" content="https://i.imgur.com/sNoMlWf.png">
 <meta property="og:image" content="https://i.imgur.com/Ye8WZmW.png">
 <meta property="article:published_time" content="2020-01-29T07:38:26.000Z">
-<meta property="article:modified_time" content="2020-01-29T11:30:22.466Z">
+<meta property="article:modified_time" content="2020-01-30T07:36:47.635Z">
 <meta property="article:author" content="SarahCheng">
 <meta property="article:tag" content="Github Actions">
 <meta property="article:tag" content="SSH Actions">
@@ -245,10 +245,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-29 15:38:26 / Modified: 19:30:22" itemprop="dateCreated datePublished" datetime="2020-01-29T15:38:26+08:00">2020-01-29</time>
+              <time title="Created: 2020-01-29 15:38:26" itemprop="dateCreated datePublished" datetime="2020-01-29T15:38:26+08:00">2020-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-30 15:36:47" itemprop="dateModified" datetime="2020-01-30T15:36:47+08:00">2020-01-30</time>
+              </span>
 
           
 
@@ -286,7 +292,14 @@
 <li>將加密後的 key 複製到專案底下 <code>mv ~/.ssh/google_compute_engine.gpg ~/xxx/xxx/google_compute_engine.gpg</code></li>
 </ol>
 <h2 id="5-修改-Actions-腳本-github-workflows-main-yml"><a class="header-anchor" href="#5-修改-Actions-腳本-github-workflows-main-yml"></a>5. 修改 Actions 腳本(.github/workflows/main.yml)</h2>
+<p>主要跑四個項目：</p>
+<p>decrypt: 取出在 github secrets 設定的 PASSPHRASE 參數來解密，並寫入 $HOME/secrets/key<br>
+test printing: 印出第一項目寫入的 $HOME/secrets/key<br>
+chom: 更改權限，以符合私鑰權限<br>
+ssh: 連線至遠端並下指令 git pull</p>
+<p>ssh參數可參考<a href="https://yu-hancheng.github.io/2020/01/29/SSH/#more" target="_blank" rel="noopener">這裏</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- name: decrypt</span><br><span class="line">  run: |</span><br><span class="line">    mkdir $HOME&#x2F;secrets</span><br><span class="line">    gpg --quiet --batch --yes --decrypt --passphrase&#x3D;&quot;$PASSPHRASE&quot; \</span><br><span class="line">    --output $HOME&#x2F;secrets&#x2F;key kkey.gpg</span><br><span class="line">  env:</span><br><span class="line">    PASSPHRASE: $&#123;&#123; secrets.PASSPHRASE &#125;&#125;</span><br><span class="line">- name: test printing</span><br><span class="line">  run: cat $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: chmod</span><br><span class="line">  run: chmod 600 $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: ssh</span><br><span class="line">  run: ssh -o StrictHostKeyChecking&#x3D;no -i $HOME&#x2F;secrets&#x2F;key sarahcheng@104.199.244.213 &quot;cd cicd_test&#x2F;;git pull&quot;</span><br></pre></td></tr></table></figure>
+<blockquote></blockquote>
 <h2 id="6-到-github-settings-頁面設定-secrets"><a class="header-anchor" href="#6-到-github-settings-頁面設定-secrets"></a>6. 到 github settings 頁面設定 secrets</h2>
 <p><img src="https://i.imgur.com/Ye8WZmW.png" alt=""></p>
 <h2 id="7-新增一個-file-並-push，最後到遠端查看"><a class="header-anchor" href="#7-新增一個-file-並-push，最後到遠端查看"></a>7. 新增一個 file 並 push，最後到遠端查看</h2>
