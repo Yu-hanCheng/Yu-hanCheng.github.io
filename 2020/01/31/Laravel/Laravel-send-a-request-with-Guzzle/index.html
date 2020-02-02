@@ -46,15 +46,21 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Vegelephant&#39;s IT world">
-<meta property="og:url" content="http://yoursite.com/tags/PHP-plugin/index.html">
+  <meta name="description" content="安裝套件 Composer require guzzlehttp&#x2F;guzzle 使用方法 use GuzzleHttp\Client; $client &#x3D; new Client(); GET $response_origin &#x3D; $client-&gt;request(&#39;GET&#39;, url); POST 12345$response_origin &#x3D; $client-&gt;reques">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel send a request with Guzzle">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/Laravel/Laravel-send-a-request-with-Guzzle/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
+<meta property="og:description" content="安裝套件 Composer require guzzlehttp&#x2F;guzzle 使用方法 use GuzzleHttp\Client; $client &#x3D; new Client(); GET $response_origin &#x3D; $client-&gt;request(&#39;GET&#39;, url); POST 12345$response_origin &#x3D; $client-&gt;reques">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-31T03:08:12.000Z">
+<meta property="article:modified_time" content="2020-02-02T09:43:48.002Z">
 <meta property="article:author" content="SarahCheng">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Guzzle">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/PHP-plugin/">
+<link rel="canonical" href="http://yoursite.com/2020/01/31/Laravel/Laravel-send-a-request-with-Guzzle/">
 
 
 <script id="page-configurations">
@@ -62,11 +68,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>Tag: PHP_plugin | Vegelephant's IT world</title>
+  <title>Laravel send a request with Guzzle | Vegelephant's IT world</title>
   
     <script>
       function sendPageView() {
@@ -208,54 +214,111 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">PHP_plugin
-          <small>Tag</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/31/Laravel/Laravel-send-a-request-with-Guzzle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SarahCheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vegelephant's IT world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Laravel send a request with Guzzle
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-31 11:08:12" itemprop="dateCreated datePublished" datetime="2020-01-31T11:08:12+08:00">2020-01-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:43:48" itemprop="dateModified" datetime="2020-02-02T17:43:48+08:00">2020-02-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <h1>安裝套件</h1>
+<p><code>Composer require guzzlehttp/guzzle</code></p>
+<h1>使用方法</h1>
+<p><code>use GuzzleHttp\Client;</code><br>
+<code>$client = new Client();</code></p>
+<h2 id="GET"><a class="header-anchor" href="#GET"></a>GET</h2>
+<p><code>$response_origin = $client-&gt;request('GET', url);</code></p>
+<h2 id="POST"><a class="header-anchor" href="#POST"></a>POST</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$response_origin &#x3D; $client-&gt;request(&#39;POST&#39;, url, </span><br><span class="line">                        [&#39;form_params&#39; &#x3D;&gt; [</span><br><span class="line">                            &quot;userID&quot;&#x3D;&gt;$request-&gt;user_id,</span><br><span class="line">                            &quot;key&quot;&#x3D;&gt;$request-&gt;key]</span><br><span class="line">                        ]);</span><br></pre></td></tr></table></figure>
+<p><code>$response = json_decode($response_origin-&gt;getBody())</code><br>
+<code>$data = $response-&gt;data</code></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-01-13T10:33:40+08:00"
-              content="2020-01-13">
-          01-13
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Laravel/" rel="tag"># Laravel</a>
+              <a href="/tags/Guzzle/" rel="tag"># Guzzle</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/01/13/PHP/php-mysql-plugin/" itemprop="url">
-            <span itemprop="name">php_mysql_plugin</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
     </div>
   </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/29/Deploy/Github-Actions/" rel="prev" title="Github Actions">
+      <i class="fa fa-chevron-left"></i> Github Actions
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/02/PHP/Preg-split-explode/" rel="next" title="Preg_split explode">
+      Preg_split explode <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
   
   
 
-  
-
+  </div>
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -302,6 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">安裝套件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GET"><span class="nav-number">2.1.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST"><span class="nav-number">2.2.</span> <span class="nav-text">POST</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -434,6 +498,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '5180802716154a1ed8e3',
+      clientSecret: 'a0967c5a54ee4ea7ca3ade99a505a84debe6a482',
+      repo: 'yu-hancheng.github.io',
+      owner: 'yu-hancheng',
+      admin: ['yu-hancheng'],
+      id: '614209b3fb88b461a802d4cc9f5a7047',
+        language: 'zh-TW',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

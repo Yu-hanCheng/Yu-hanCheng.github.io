@@ -46,20 +46,25 @@
   };
 </script>
 
-  <meta name="description" content="git clone new repo git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-theme-next themes&#x2F;next-reloaded Local search npm uninstall hexo-generator-searchdb --save npm install hexo-generator-search --save">
+  <meta name="description" content="前言 讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Upgrade theme Next">
-<meta property="og:url" content="http://yoursite.com/2020/01/22/Next/index.html">
+<meta property="og:title" content="Github Actions SSH CI">
+<meta property="og:url" content="http://yoursite.com/2020/01/29/Deploy/Github-Actions-SSH-CI/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="git clone new repo git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-theme-next themes&#x2F;next-reloaded Local search npm uninstall hexo-generator-searchdb --save npm install hexo-generator-search --save">
+<meta property="og:description" content="前言 讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-22T09:52:35.000Z">
-<meta property="article:modified_time" content="2020-01-22T10:04:38.482Z">
+<meta property="og:image" content="https://i.imgur.com/sNoMlWf.png">
+<meta property="og:image" content="https://i.imgur.com/Ye8WZmW.png">
+<meta property="article:published_time" content="2020-01-29T07:38:26.000Z">
+<meta property="article:modified_time" content="2020-02-02T09:43:37.452Z">
 <meta property="article:author" content="SarahCheng">
-<meta property="article:tag" content="Next">
+<meta property="article:tag" content="Github Actions">
+<meta property="article:tag" content="SSH Actions">
+<meta property="article:tag" content="CI">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/sNoMlWf.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/22/Next/">
+<link rel="canonical" href="http://yoursite.com/2020/01/29/Deploy/Github-Actions-SSH-CI/">
 
 
 <script id="page-configurations">
@@ -71,7 +76,7 @@
   };
 </script>
 
-  <title>Upgrade theme Next | Vegelephant's IT world</title>
+  <title>Github Actions SSH CI | Vegelephant's IT world</title>
   
     <script>
       function sendPageView() {
@@ -218,7 +223,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/22/Next/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Deploy/Github-Actions-SSH-CI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -231,7 +236,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Upgrade theme Next
+          Github Actions SSH CI
         </h1>
 
         <div class="post-meta">
@@ -240,10 +245,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-22 17:52:35 / Modified: 18:04:38" itemprop="dateCreated datePublished" datetime="2020-01-22T17:52:35+08:00">2020-01-22</time>
+              <time title="Created: 2020-01-29 15:38:26" itemprop="dateCreated datePublished" datetime="2020-01-29T15:38:26+08:00">2020-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:43:37" itemprop="dateModified" datetime="2020-02-02T17:43:37+08:00">2020-02-02</time>
+              </span>
 
           
 
@@ -256,11 +267,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="git-clone-new-repo"><a class="header-anchor" href="#git-clone-new-repo"></a>git clone new repo</h2>
-<p><code>git clone https://github.com/theme-next/hexo-theme-next themes/next-reloaded</code></p>
-<h2 id="Local-search"><a class="header-anchor" href="#Local-search"></a>Local search</h2>
-<p><code>npm uninstall hexo-generator-searchdb --save</code><br>
-<code>npm install hexo-generator-search --save</code></p>
+        <h1>前言</h1>
+<p>讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。 <a id="more"></a><br>
+本篇實作皆參考<a href="https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets" target="_blank" rel="noopener">官方文件</a><br>
+若還沒使用過 Action 可以先參考<a href="https://yu-hancheng.github.io/2020/01/29/Github-Actions/#more" target="_blank" rel="noopener">這篇</a></p>
+<h1>步驟</h1>
+<h2 id="1-開啟一個-GCE"><a class="header-anchor" href="#1-開啟一個-GCE"></a>1. 開啟一個 GCE</h2>
+<h2 id="2-從本機端-ssh-連線到-GCE"><a class="header-anchor" href="#2-從本機端-ssh-連線到-GCE"></a>2. 從本機端 ssh 連線到 GCE</h2>
+<pre><code>* 使用官方的連線指令 `gcloud beta compute --project &quot;xxx&quot; ssh --zone &quot;xxx&quot; &quot;xxxx&quot;`
+&gt; 自動產生新的一組 key （google_compute_engine）
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">WARNING: The private SSH key file for gcloud does not exist.</span><br><span class="line">WARNING: Your SSH key files are broken.</span><br><span class="line">private key (NOT FOUND) [&#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine]</span><br><span class="line">public key  (OK)        [&#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine.pub]</span><br><span class="line">We are going to overwrite all above files.</span><br><span class="line">Do you want to continue (y&#x2F;N)?   y</span><br><span class="line"></span><br><span class="line">Generating public&#x2F;private rsa key pair.</span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">&#x3D;&#x3D;Your identification has been saved in &#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine.&#x3D;&#x3D;</span><br><span class="line">Your public key has been saved in &#x2F;Users&#x2F;sarahcheng&#x2F;.ssh&#x2F;google_compute_engine.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:sAVwcUrBTRHaTVL+iZHw923tXSC9jkwu5JX2HBHyb8s </span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+* 測試用自動產生的 ssh key 連線: `ssh -i ~/.ssh/google_compute_engine sarahcheng@35.229.180.75` 確定 key 可以用
+</code></pre>
+<h2 id="3-建立-github-專案，產生-action-範本，接著-git-clone-至本機端和遠端"><a class="header-anchor" href="#3-建立-github-專案，產生-action-範本，接著-git-clone-至本機端和遠端"></a>3. 建立 github 專案，產生 action 範本，接著 git clone 至本機端和遠端</h2>
+<ul>
+<li>clone 用 https 比較省事</li>
+</ul>
+<h2 id="4-將-key-加密"><a class="header-anchor" href="#4-將-key-加密"></a>4. 將 key 加密</h2>
+<ol>
+<li>用 gpg 加密 <code>gpg --symmetric --cipher-algo AES256 ~/.ssh/google_compute_engine</code></li>
+<li>輸入 passphrase （test）<br>
+<img src="https://i.imgur.com/sNoMlWf.png" alt=""></li>
+<li>將加密後的 key 複製到專案底下 <code>mv ~/.ssh/google_compute_engine.gpg ~/xxx/xxx/google_compute_engine.gpg</code></li>
+</ol>
+<h2 id="5-修改-Actions-腳本-github-workflows-main-yml"><a class="header-anchor" href="#5-修改-Actions-腳本-github-workflows-main-yml"></a>5. 修改 Actions 腳本(.github/workflows/main.yml)</h2>
+<p>主要跑四個項目：</p>
+<p>decrypt: 取出在 github secrets 設定的 PASSPHRASE 參數來解密，並寫入 $HOME/secrets/key<br>
+test printing: 印出第一項目寫入的 $HOME/secrets/key<br>
+chom: 更改權限，以符合私鑰權限<br>
+ssh: 連線至遠端並下指令 git pull</p>
+<p>ssh參數可參考<a href="https://yu-hancheng.github.io/2020/01/29/SSH/#more" target="_blank" rel="noopener">這裏</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- name: decrypt</span><br><span class="line">  run: |</span><br><span class="line">    mkdir $HOME&#x2F;secrets</span><br><span class="line">    gpg --quiet --batch --yes --decrypt --passphrase&#x3D;&quot;$PASSPHRASE&quot; \</span><br><span class="line">    --output $HOME&#x2F;secrets&#x2F;key kkey.gpg</span><br><span class="line">  env:</span><br><span class="line">    PASSPHRASE: $&#123;&#123; secrets.PASSPHRASE &#125;&#125;</span><br><span class="line">- name: test printing</span><br><span class="line">  run: cat $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: chmod</span><br><span class="line">  run: chmod 600 $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: ssh</span><br><span class="line">  run: ssh -o StrictHostKeyChecking&#x3D;no -i $HOME&#x2F;secrets&#x2F;key sarahcheng@104.199.244.213 &quot;cd cicd_test&#x2F;;git pull&quot;</span><br></pre></td></tr></table></figure>
+<blockquote></blockquote>
+<h2 id="6-到-github-settings-頁面設定-secrets"><a class="header-anchor" href="#6-到-github-settings-頁面設定-secrets"></a>6. 到 github settings 頁面設定 secrets</h2>
+<p><img src="https://i.imgur.com/Ye8WZmW.png" alt=""></p>
+<h2 id="7-新增一個-file-並-push，最後到遠端查看"><a class="header-anchor" href="#7-新增一個-file-並-push，最後到遠端查看"></a>7. 新增一個 file 並 push，最後到遠端查看</h2>
+<p>ＯＫ</p>
+<p>最後</p>
+<h1>感謝我大 TTN 協助！！</h1>
 
     </div>
 
@@ -270,7 +315,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Next/" rel="tag"># Next</a>
+              <a href="/tags/Github-Actions/" rel="tag"># Github Actions</a>
+              <a href="/tags/SSH-Actions/" rel="tag"># SSH Actions</a>
+              <a href="/tags/CI/" rel="tag"># CI</a>
           </div>
 
         
@@ -284,12 +331,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/" rel="prev" title="抽象類別和介面">
-      <i class="fa fa-chevron-left"></i> 抽象類別和介面
+    <a href="/2020/01/29/Deploy/SSH/" rel="prev" title="SSH">
+      <i class="fa fa-chevron-left"></i> SSH
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/01/29/SSH/" rel="next" title="SSH">
-      SSH <i class="fa fa-chevron-right"></i>
+    <a href="/2020/01/29/Deploy/Github-Actions/" rel="next" title="Github Actions">
+      Github Actions <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -351,7 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone-new-repo"><span class="nav-number">1.</span> <span class="nav-text">git clone new repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-search"><span class="nav-number">2.</span> <span class="nav-text">Local search</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-開啟一個-GCE"><span class="nav-number">2.1.</span> <span class="nav-text">1. 開啟一個 GCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-從本機端-ssh-連線到-GCE"><span class="nav-number">2.2.</span> <span class="nav-text">2. 從本機端 ssh 連線到 GCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-建立-github-專案，產生-action-範本，接著-git-clone-至本機端和遠端"><span class="nav-number">2.3.</span> <span class="nav-text">3. 建立 github 專案，產生 action 範本，接著 git clone 至本機端和遠端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-將-key-加密"><span class="nav-number">2.4.</span> <span class="nav-text">4. 將 key 加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-修改-Actions-腳本-github-workflows-main-yml"><span class="nav-number">2.5.</span> <span class="nav-text">5. 修改 Actions 腳本(.github&#x2F;workflows&#x2F;main.yml)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-到-github-settings-頁面設定-secrets"><span class="nav-number">2.6.</span> <span class="nav-text">6. 到 github settings 頁面設定 secrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-新增一個-file-並-push，最後到遠端查看"><span class="nav-number">2.7.</span> <span class="nav-text">7. 新增一個 file 並 push，最後到遠端查看</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">感謝我大 TTN 協助！！</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -365,14 +412,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -495,7 +542,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo: 'yu-hancheng.github.io',
       owner: 'yu-hancheng',
       admin: ['yu-hancheng'],
-      id: '96c965871eb571135cf13447ffdd341a',
+      id: 'a1893cd4e68be5de36e50b0b3bacefba',
         language: 'zh-TW',
       distractionFreeMode: true
     });

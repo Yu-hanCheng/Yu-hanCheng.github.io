@@ -46,34 +46,27 @@
   };
 </script>
 
-  <meta name="description" content="前言 簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SQL_join">
-<meta property="og:url" content="http://yoursite.com/2020/01/13/SQL-join/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Vegelephant&#39;s IT world">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="Vegelephant&#39;s IT world">
-<meta property="og:description" content="前言 簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.imgur.com/ZNsDRog.png">
-<meta property="article:published_time" content="2020-01-13T02:37:58.000Z">
-<meta property="article:modified_time" content="2020-01-22T08:52:53.268Z">
 <meta property="article:author" content="SarahCheng">
-<meta property="article:tag" content="SQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/ZNsDRog.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/13/SQL-join/">
+<link rel="canonical" href="http://yoursite.com/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true
+    isHome: true,
+    isPost: false
   };
 </script>
 
-  <title>SQL_join | Vegelephant's IT world</title>
+  <title>Vegelephant's IT world</title>
   
     <script>
       function sendPageView() {
@@ -216,11 +209,11 @@
             
 
   <div class="posts-expand">
-      
+        
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/SQL-join/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/PHP/php-mysql-plugin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -233,7 +226,8 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          SQL_join
+          
+            <a href="/2020/01/13/PHP/php-mysql-plugin/" class="post-title-link" itemprop="url">php_mysql_plugin</a>
         </h1>
 
         <div class="post-meta">
@@ -243,14 +237,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-13 10:37:58" itemprop="dateCreated datePublished" datetime="2020-01-13T10:37:58+08:00">2020-01-13</time>
+              <time title="Created: 2020-01-13 10:33:40" itemprop="dateCreated datePublished" datetime="2020-01-13T10:33:40+08:00">2020-01-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-22 16:52:53" itemprop="dateModified" datetime="2020-01-22T16:52:53+08:00">2020-01-22</time>
+                <time title="Modified: 2020-02-02 17:44:20" itemprop="dateModified" datetime="2020-02-02T17:44:20+08:00">2020-02-02</time>
               </span>
 
           
@@ -264,77 +258,272 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>前言</h1>
-<p>簡單理解 Inner join、 Left join 的差別。 以及使用經驗分享。<a id="more"></a></p>
-<h2 id="WHY"><a class="header-anchor" href="#WHY"></a>WHY</h2>
+          <h1>曇花一現的plugin</h1>
+<h6 id="tags-想知道嗎-MySQL"><a class="header-anchor" href="#tags-想知道嗎-MySQL"></a>tags: <code>想知道嗎</code>, <code>MySQL</code></h6>
+<hr>
+<h3 id="php-之-caching-sha2-password-plugin-的興衰成敗"><a class="header-anchor" href="#php-之-caching-sha2-password-plugin-的興衰成敗"></a>php 之 caching_sha2_password plugin 的興衰成敗</h3>
+<ul>
+<li>WHY</li>
+<li>WHAT</li>
+<li>HOW<br>
+Note:<br>
+為什麼需要這個 plugin<br>
+他是什麼<br>
+php如何解決他造成的問題</li>
+</ul>
+<hr>
+<p><img src="https://i.imgur.com/H2NuPKj.png" alt=""><br>
+Note:<br>
+php 需要一些plugins來和 DB溝通 – Mysqlnd</p>
+<hr>
+<p>Versions of MySQL</p>
+<table>
+<thead>
+<tr>
+<th>Release</th>
+<th>End of support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.1</td>
+<td>December 2013</td>
+</tr>
+<tr>
+<td>5.5</td>
+<td>December 2018</td>
+</tr>
+<tr>
+<td>5.6</td>
+<td>February 2021</td>
+</tr>
+<tr>
+<td>5.7</td>
+<td>October 2023</td>
+</tr>
+<tr>
+<td><mark>8.0</mark></td>
+<td>April 2026</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Release</th>
+<th>Authentication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.x</td>
+<td>mysql_native_password</td>
+</tr>
+<tr>
+<td>5.6</td>
+<td><span><!-- .element: class="fragment highlight-green" -->sha256_password</span></td>
+</tr>
+<tr>
+<td>8.0</td>
+<td><span><!-- .element: class="fragment highlight-red" -->caching_sha2_password</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note:<br>
+MySQL 5.6以前，密碼加密方式是 <code>mysql_native_password</code>，SHA1算法。如果兩個用戶帳戶使用相同的密碼，加密出來的結果是相同的<br>
+後來MySQL 5.6有 <code>sha256_password</code> 使用多輪SHA256 hash，雖然安全性強，不過因為需要 TLS 或 支援 RSA 的密碼交換來連接到 server，非常耗時，所以後來又推出兩全其美的演算法。<br>
+MySQL 8 才升級，預設身份驗證的插件為<mark>caching_sha2_password</mark></p>
+<hr>
+<p><a href="https://mysqlserverteam.com/mysql-8-0-4-new-default-authentication-plugin-caching_sha2_password/" target="_blank" rel="noopener">caching_sha2_password</a></p>
+<ul>
+<li>首次連接:<br>
+<img src="https://i.imgur.com/eSPDRCN.png" alt=""></li>
+</ul>
+<hr>
+<ul>
+<li>下一次：<br>
+<img src="https://i.imgur.com/OhDSvbG.png" alt=""></li>
+</ul>
+<p>Note:<br>
+使用SHA-256提供更安全的密碼加密，並使用Cache來加速同一用戶的身份驗證過程。<br>
+<a href="https://kknews.cc/code/y3v2j3g.html" target="_blank" rel="noopener">reference</a></p>
+<hr>
+<p>支持 caching_sha2_password 的 PHP 版本</p>
+<div><font size="5">
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>no</th>
+<th>support</th>
+<th>no</th>
+<th>no</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7.1</td>
+<td>7.1.2(0214’17)</td>
+<td>7.1.20(0719’18)</td>
+<td>7.1.23(1009’18)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td>no</td>
+<td>7.2.8   (0717’18)</td>
+<td>7.2.11 (1009’18)</td>
+<td>7.2.22</td>
+</tr>
+<tr>
+<td>7.3 (0708’19)</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>7.4 (support)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</font>
+</div>
+Note:
+[官方文件：](https://www.php.net/manual/en/mysqli.requirements.php)
+When running a PHP version before 7.1.16, or PHP 7.2 before 7.2.4, set MySQL 8 Server's default password plugin to mysql_native_password. 
+<p><a href="http://ftp.ntu.edu.tw/pub/php/distributions/" target="_blank" rel="noopener">all distributions 有時間</a></p>
+<hr>
+<p>WHY NOT SUPPORT</p>
+<p><a href="https://bugs.php.net/bug.php?id=76651" target="_blank" rel="noopener">Bug #76651(<s>php programmer筆戰</s>)</a><br>
+<img src="https://i.imgur.com/a3kGge1.png" alt="" width="300"></p>
+<p>This new machanism requires <mark>OpenSSL</mark> and <mark>ext/hash</mark> to be available.</p>
+<p>Note:<br>
+Without those statically compiled in (we can’t do proper runtime guessing for C symbols) we can’t use them and have a compile-time decision to make.<br>
+<a href="https://bugs.php.net/bug.php?id=76660" target="_blank" rel="noopener">Bug #76660</a><br>
+PDOException</p>
+<hr>
+<p>On github:</p>
+<p>Per bug #76651 these changes do not appear to work correctly in<br>
+some cases. As no immediate fix seems to be forthcoming, I’m<br>
+reverting these changes.</p>
+<hr>
+<p>修改 /ext/mysqlnd/mysqlnd_auth.c</p>
+<p><a href="https://github.com/php/php-src/commit/03740ef7dffcc80530a89ebde3ccf5464f7f18e6#diff-398af6cde010c06283216edde1709507" target="_blank" rel="noopener">revert 內容 on github：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Revert all MySQL auth related changes</span><br><span class="line"></span><br><span class="line">Per bug #76651 these changes do not appear to work correctly in</span><br><span class="line">some cases. As no immediate fix seems to be forthcoming, I&#39;m</span><br><span class="line">reverting these changes.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fixed invalid free introduced by d6e81f0 (avoid keeping &quot;invalid&quot; pointer)&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 11507c0.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix mysqlnd build without openssl&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 6c9db02.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix VC compilation as variable size array is not supported&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit f96df64.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix MySQL 8 auth&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit d6e81f0.</span><br></pre></td></tr></table></figure>
+<hr>
+<p>如果有興趣了解可以比較，之前升級加密方式改的 code 和最近改的方式差在哪裡<br>
+<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.2.8/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.2.8</a><br>
+<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.4/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.4</a></p>
+<p>Note:<br>
+C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank" rel="noopener"><code>a-&gt;b</code> 的含義是 <code>(*a).b</code></a></p>
+<hr>
+<p>目前處理方式：</p>
+<hr>
 <ol>
-<li>班上國文80分以上，但數學不及格的同學有哪些</li>
-<li>Shiva 的魔法商店中，使用者 Sarah 沒有買過的商品有哪些</li>
+<li>進入 mysql介面後，可以看一下</li>
 </ol>
-<hr>
-<h2 id="WHAT"><a class="header-anchor" href="#WHAT"></a>WHAT</h2>
-<p><img src="https://i.imgur.com/ZNsDRog.png" alt=""></p>
-<hr>
-<h2 id="Left-join"><a class="header-anchor" href="#Left-join"></a>Left join</h2>
-<p>會先取得所有的 Ａ，<br>
-那如果沒有相對應的 Ｂ ，就直接全部塞 null ，<br>
-他的邏輯就是抓取，『所有的課(A)加上修課學生的資料(B)』</p>
-<hr>
-<p><a href="https://dotblogs.com.tw/brooke/2015/03/15/150726" target="_blank" rel="noopener">參考</a></p>
-<hr>
-<h2 id="牛刀小試"><a class="header-anchor" href="#牛刀小試"></a>牛刀小試</h2>
-<h3 id="Question"><a class="header-anchor" href="#Question"></a>Question</h3>
-<ol>
-<li>有修演算法，也有修人機互動課程的同學有哪些(Ａ:演算法名單,B: 人機互動名單）</li>
-<li>班上國文和數學都80分以上同學有哪些(Ａ：國文80分以上名單,B: 數學80分以上名單）</li>
-<li>班上國文80分以上，但數學不及格的同學有哪些（Ａ：國文分數表,B: 數學及格的名單）</li>
-<li>請列出魔法店中，Sarah 已經買過的商品（Ａ：有賣的商品列表, B:Sarah買過的商品列表）</li>
-<li>請列出魔法店中的所有魔法，並標記 Sarah 還沒買過的商品（Ａ: 魔法店的商品列表, B: Sarah買過的商品）</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;default_authentication_plugin&#39;;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 /usr/local/etc/my.cnf 中的[mysqld] 加</li>
 </ol>
-<h3 id="Answer"><a class="header-anchor" href="#Answer"></a>Answer</h3>
-<ol>
-<li>inner join</li>
-<li>inner join</li>
-<li>left exclusive join</li>
-<li>inner join</li>
-<li>left inclusive join</li>
-</ol>
-<h2 id="HOW"><a class="header-anchor" href="#HOW"></a>HOW</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$magics &#x3D; ShopMagic::where([&#39;shop_id&#39; &#x3D;&gt; $id])</span><br><span class="line">            -&gt;join(&#39;magics&#39;,&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;magics.id&#39;)</span><br><span class="line">            -&gt;leftjoin(&#39;user_magics&#39;, function($join)&#123;</span><br><span class="line">                $join-&gt;where(&#39;user_magics.user_id&#39;,&#39;&#x3D;&#39;, Auth::user()-&gt;id)</span><br><span class="line">                -&gt;on(&#39;shop_magics.magic_id&#39;, &#39;&#x3D;&#39;, &#39;user_magics.magic_id&#39;);</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;select(&#39;magics.id&#39;,&#39;magics.name&#39;,&#39;magics.price&#39;,&#39;magics.level&#39;,&#39;user_magics.magic_id&#39;)</span><br><span class="line">            -&gt;get();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
+<p>Note:<br>
+<a href="https://www.itread01.com/content/1532371255.html" target="_blank" rel="noopener">處理 caching_sha2_password 中文</a></p>
 <hr>
+<p>Thank you！^0^</p>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/SQL/" rel="tag"># SQL</a>
-          </div>
-
-        
-  <div class="post-widgets">
-    <div class="wp_rating">
-      <div id="wpac-rating"></div>
-    </div>
-  </div>
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/01/13/PHP/php-mysql-plugin/" rel="prev" title="php_mysql_plugin">
-      <i class="fa fa-chevron-left"></i> php_mysql_plugin
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/01/13/Deploy/GCP-deploy-php-nginx-mysql/" rel="next" title="GCP_deploy_php_nginx_mysql">
-      GCP_deploy_php_nginx_mysql <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
+        <div class="post-eof"></div>
       </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/RegularExpression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SarahCheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vegelephant's IT world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/10/RegularExpression/" class="post-title-link" itemprop="url">RegularExpression</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-10 16:30:20" itemprop="dateCreated datePublished" datetime="2020-01-10T16:30:20+08:00">2020-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-22 16:54:41" itemprop="dateModified" datetime="2020-01-22T16:54:41+08:00">2020-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
     
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>Why</h1>
+<ul>
+<li>做過濾或驗證(錯誤,攻擊)</li>
+<li>規範或限制文字的格式</li>
+<li>提高效率</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/10/RegularExpression/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
   
   
@@ -342,10 +531,15 @@
 
   </div>
 
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
 
           </div>
           
-    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -392,7 +586,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WHY"><span class="nav-number">1.1.</span> <span class="nav-text">WHY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WHAT"><span class="nav-number">1.2.</span> <span class="nav-text">WHAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Left-join"><span class="nav-number">1.3.</span> <span class="nav-text">Left join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#牛刀小試"><span class="nav-number">1.4.</span> <span class="nav-text">牛刀小試</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Question"><span class="nav-number">1.4.1.</span> <span class="nav-text">Question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Answer"><span class="nav-number">1.4.2.</span> <span class="nav-text">Answer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW"><span class="nav-number">1.5.</span> <span class="nav-text">HOW</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -525,25 +718,6 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-
-<script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID: '5180802716154a1ed8e3',
-      clientSecret: 'a0967c5a54ee4ea7ca3ade99a505a84debe6a482',
-      repo: 'yu-hancheng.github.io',
-      owner: 'yu-hancheng',
-      admin: ['yu-hancheng'],
-      id: 'e6ecbf282874104e68fc22cbd9004275',
-        language: 'zh-TW',
-      distractionFreeMode: true
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
-});
-</script>
 
 </body>
 </html>

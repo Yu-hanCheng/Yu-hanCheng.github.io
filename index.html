@@ -213,7 +213,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Github-Actions/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/02/PHP/Preg-split-explode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -227,7 +227,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/29/Github-Actions/" class="post-title-link" itemprop="url">Github Actions</a>
+            <a href="/2020/02/02/PHP/Preg-split-explode/" class="post-title-link" itemprop="url">Preg_split explode</a>
         </h1>
 
         <div class="post-meta">
@@ -238,8 +238,162 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-01-29 16:49:49 / Modified: 17:29:54" itemprop="dateCreated datePublished" datetime="2020-01-29T16:49:49+08:00">2020-01-29</time>
+              <time title="Created: 2020-02-02 17:05:05 / Modified: 17:44:20" itemprop="dateCreated datePublished" datetime="2020-02-02T17:05:05+08:00">2020-02-02</time>
             </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>前言</h1>
+<p>此兩函式都可做字串切割，一個</p>
+<h2 id="Eplode"><a class="header-anchor" href="#Eplode"></a>Eplode</h2>
+<p><code>explode ( string $delimiter , string $string [, int $limit = PHP_INT_MAX ] ) : array</code></p>
+<h3 id="delimiter-參數"><a class="header-anchor" href="#delimiter-參數"></a>delimiter 參數</h3>
+<p>String<br>
+<code>&quot;|&quot;</code></p>
+<h3 id="limit-參數"><a class="header-anchor" href="#limit-參數"></a>limit 參數</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># limit&#x3D; 3</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] &#x3D;&gt; one</span><br><span class="line">    [1] &#x3D;&gt; two</span><br><span class="line">    [2] &#x3D;&gt; three|four|five|six|seven</span><br><span class="line">)</span><br><span class="line"># limit&#x3D; -2</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] &#x3D;&gt; one</span><br><span class="line">    [1] &#x3D;&gt; two</span><br><span class="line">    [2] &#x3D;&gt; three</span><br><span class="line">    [3] &#x3D;&gt; four</span><br><span class="line">    [4] &#x3D;&gt; five</span><br><span class="line">)</span><br><span class="line"># limit&#x3D; -1</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] &#x3D;&gt; one</span><br><span class="line">    [1] &#x3D;&gt; two</span><br><span class="line">    [2] &#x3D;&gt; three</span><br><span class="line">    [3] &#x3D;&gt; four</span><br><span class="line">    [4] &#x3D;&gt; five</span><br><span class="line">    [5] &#x3D;&gt; six</span><br><span class="line">)</span><br><span class="line"># limit&#x3D; 0 or 1</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] &#x3D;&gt; one|two|three|four|five|six|seven</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="Grep-split"><a class="header-anchor" href="#Grep-split"></a>Grep_split</h2>
+<p><code>preg_split ( string $pattern , string $subject [, int $limit = -1 [, int $flags = 0 ]] ) : array</code></p>
+<h3 id="pattern-參數"><a class="header-anchor" href="#pattern-參數"></a>pattern 參數</h3>
+<p>regular expression<br>
+<code>&quot;/[\s,]+/&quot;</code></p>
+<h3 id="limit-參數-v2"><a class="header-anchor" href="#limit-參數-v2"></a>limit 參數</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># limit &#x3D; -1 or 0 means &quot;no limit&quot;</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] &#x3D;&gt; onn e</span><br><span class="line">    [1] &#x3D;&gt; t wo</span><br><span class="line">    [2] &#x3D;&gt; three</span><br><span class="line">    [3] &#x3D;&gt; four</span><br><span class="line">    [4] &#x3D;&gt; five</span><br><span class="line">    [5] &#x3D;&gt; six</span><br><span class="line">    [6] &#x3D;&gt; seven</span><br><span class="line">)</span><br><span class="line"># limit&#x3D; 1</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] &#x3D;&gt; one|two|three|four|five|six|seven</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/31/Laravel/Laravel-send-a-request-with-Guzzle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SarahCheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vegelephant's IT world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/31/Laravel/Laravel-send-a-request-with-Guzzle/" class="post-title-link" itemprop="url">Laravel send a request with Guzzle</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-31 11:08:12" itemprop="dateCreated datePublished" datetime="2020-01-31T11:08:12+08:00">2020-01-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:43:48" itemprop="dateModified" datetime="2020-02-02T17:43:48+08:00">2020-02-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>安裝套件</h1>
+<p><code>Composer require guzzlehttp/guzzle</code></p>
+<h1>使用方法</h1>
+<p><code>use GuzzleHttp\Client;</code><br>
+<code>$client = new Client();</code></p>
+<h2 id="GET"><a class="header-anchor" href="#GET"></a>GET</h2>
+<p><code>$response_origin = $client-&gt;request('GET', url);</code></p>
+<h2 id="POST"><a class="header-anchor" href="#POST"></a>POST</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$response_origin &#x3D; $client-&gt;request(&#39;POST&#39;, url, </span><br><span class="line">                        [&#39;form_params&#39; &#x3D;&gt; [</span><br><span class="line">                            &quot;userID&quot;&#x3D;&gt;$request-&gt;user_id,</span><br><span class="line">                            &quot;key&quot;&#x3D;&gt;$request-&gt;key]</span><br><span class="line">                        ]);</span><br></pre></td></tr></table></figure>
+<p><code>$response = json_decode($response_origin-&gt;getBody())</code><br>
+<code>$data = $response-&gt;data</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Deploy/Github-Actions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SarahCheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vegelephant's IT world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/29/Deploy/Github-Actions/" class="post-title-link" itemprop="url">Github Actions</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-29 16:49:49" itemprop="dateCreated datePublished" datetime="2020-01-29T16:49:49+08:00">2020-01-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:43:37" itemprop="dateModified" datetime="2020-02-02T17:43:37+08:00">2020-02-02</time>
+              </span>
 
           
 
@@ -256,7 +410,7 @@
 <p>執行最簡單的 Hello world 範本測試 Actions 的使用
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/01/29/Github-Actions/#more" rel="contents">
+              <a class="btn" href="/2020/01/29/Deploy/Github-Actions/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -280,7 +434,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Github-Actions-SSH-CI/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Deploy/Github-Actions-SSH-CI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -294,7 +448,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/29/Github-Actions-SSH-CI/" class="post-title-link" itemprop="url">Github Actions SSH CI</a>
+            <a href="/2020/01/29/Deploy/Github-Actions-SSH-CI/" class="post-title-link" itemprop="url">Github Actions SSH CI</a>
         </h1>
 
         <div class="post-meta">
@@ -311,7 +465,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-30 15:36:47" itemprop="dateModified" datetime="2020-01-30T15:36:47+08:00">2020-01-30</time>
+                <time title="Modified: 2020-02-02 17:43:37" itemprop="dateModified" datetime="2020-02-02T17:43:37+08:00">2020-02-02</time>
               </span>
 
           
@@ -329,7 +483,7 @@
 <p>讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/01/29/Github-Actions-SSH-CI/#more" rel="contents">
+              <a class="btn" href="/2020/01/29/Deploy/Github-Actions-SSH-CI/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -353,7 +507,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/SSH/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Deploy/SSH/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -367,7 +521,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/29/SSH/" class="post-title-link" itemprop="url">SSH</a>
+            <a href="/2020/01/29/Deploy/SSH/" class="post-title-link" itemprop="url">SSH</a>
         </h1>
 
         <div class="post-meta">
@@ -376,10 +530,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-29 15:10:48 / Modified: 15:40:46" itemprop="dateCreated datePublished" datetime="2020-01-29T15:10:48+08:00">2020-01-29</time>
+              <time title="Created: 2020-01-29 15:10:48" itemprop="dateCreated datePublished" datetime="2020-01-29T15:10:48+08:00">2020-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:44:29" itemprop="dateModified" datetime="2020-02-02T17:44:29+08:00">2020-02-02</time>
+              </span>
 
           
 
@@ -396,7 +556,7 @@
 <p>簡介目前用過的參數和常見 QA
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/01/29/SSH/#more" rel="contents">
+              <a class="btn" href="/2020/01/29/Deploy/SSH/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -420,7 +580,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/22/Next/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/22/Hexo/Next/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -434,7 +594,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/22/Next/" class="post-title-link" itemprop="url">Upgrade theme Next</a>
+            <a href="/2020/01/22/Hexo/Next/" class="post-title-link" itemprop="url">Upgrade theme Next</a>
         </h1>
 
         <div class="post-meta">
@@ -443,10 +603,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-22 17:52:35 / Modified: 18:04:38" itemprop="dateCreated datePublished" datetime="2020-01-22T17:52:35+08:00">2020-01-22</time>
+              <time title="Created: 2020-01-22 17:52:35" itemprop="dateCreated datePublished" datetime="2020-01-22T17:52:35+08:00">2020-01-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:43:11" itemprop="dateModified" datetime="2020-02-02T17:43:11+08:00">2020-02-02</time>
+              </span>
 
           
 
@@ -483,7 +649,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/PHP/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -497,7 +663,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/" class="post-title-link" itemprop="url">抽象類別和介面</a>
+            <a href="/2020/01/20/PHP/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/" class="post-title-link" itemprop="url">抽象類別和介面</a>
         </h1>
 
         <div class="post-meta">
@@ -506,10 +672,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-20 15:31:01 / Modified: 17:41:16" itemprop="dateCreated datePublished" datetime="2020-01-20T15:31:01+08:00">2020-01-20</time>
+              <time title="Created: 2020-01-20 15:31:01" itemprop="dateCreated datePublished" datetime="2020-01-20T15:31:01+08:00">2020-01-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 17:44:41" itemprop="dateModified" datetime="2020-02-02T17:44:41+08:00">2020-02-02</time>
+              </span>
 
           
 
@@ -528,7 +700,7 @@
 物件透過 $this 關鍵字來參考自己。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/01/20/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/#more" rel="contents">
+              <a class="btn" href="/2020/01/20/PHP/%E6%8A%BD%E8%B1%A1%E9%A1%9E%E5%88%A5%E5%92%8C%E4%BB%8B%E9%9D%A2/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -552,7 +724,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/Laravel-custom-guard/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/Laravel/Laravel-custom-guard/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -566,7 +738,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/13/Laravel-custom-guard/" class="post-title-link" itemprop="url">[Laravel]_custom_guard</a>
+            <a href="/2020/01/13/Laravel/Laravel-custom-guard/" class="post-title-link" itemprop="url">[Laravel]_custom_guard</a>
         </h1>
 
         <div class="post-meta">
@@ -583,7 +755,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-20 16:41:57" itemprop="dateModified" datetime="2020-01-20T16:41:57+08:00">2020-01-20</time>
+                <time title="Modified: 2020-02-02 17:43:48" itemprop="dateModified" datetime="2020-02-02T17:43:48+08:00">2020-02-02</time>
               </span>
 
           
@@ -634,7 +806,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/GCP-deploy-php-nginx-mysql/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/Deploy/GCP-deploy-php-nginx-mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -648,7 +820,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/13/GCP-deploy-php-nginx-mysql/" class="post-title-link" itemprop="url">GCP_deploy_php_nginx_mysql</a>
+            <a href="/2020/01/13/Deploy/GCP-deploy-php-nginx-mysql/" class="post-title-link" itemprop="url">GCP_deploy_php_nginx_mysql</a>
         </h1>
 
         <div class="post-meta">
@@ -665,7 +837,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-29 15:52:28" itemprop="dateModified" datetime="2020-01-29T15:52:28+08:00">2020-01-29</time>
+                <time title="Modified: 2020-02-02 17:43:37" itemprop="dateModified" datetime="2020-02-02T17:43:37+08:00">2020-02-02</time>
               </span>
 
           
@@ -683,7 +855,7 @@
 <p>手把手在 GCP 部署 Nginx server 之 Laravel 專案
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/01/13/GCP-deploy-php-nginx-mysql/#more" rel="contents">
+              <a class="btn" href="/2020/01/13/Deploy/GCP-deploy-php-nginx-mysql/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -776,329 +948,12 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/php-mysql-plugin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="SarahCheng">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vegelephant's IT world">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/13/php-mysql-plugin/" class="post-title-link" itemprop="url">php_mysql_plugin</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-13 10:33:40" itemprop="dateCreated datePublished" datetime="2020-01-13T10:33:40+08:00">2020-01-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-20 16:41:58" itemprop="dateModified" datetime="2020-01-20T16:41:58+08:00">2020-01-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>曇花一現的plugin</h1>
-<h6 id="tags-想知道嗎-MySQL"><a class="header-anchor" href="#tags-想知道嗎-MySQL"></a>tags: <code>想知道嗎</code>, <code>MySQL</code></h6>
-<hr>
-<h3 id="php-之-caching-sha2-password-plugin-的興衰成敗"><a class="header-anchor" href="#php-之-caching-sha2-password-plugin-的興衰成敗"></a>php 之 caching_sha2_password plugin 的興衰成敗</h3>
-<ul>
-<li>WHY</li>
-<li>WHAT</li>
-<li>HOW<br>
-Note:<br>
-為什麼需要這個 plugin<br>
-他是什麼<br>
-php如何解決他造成的問題</li>
-</ul>
-<hr>
-<p><img src="https://i.imgur.com/H2NuPKj.png" alt=""><br>
-Note:<br>
-php 需要一些plugins來和 DB溝通 – Mysqlnd</p>
-<hr>
-<p>Versions of MySQL</p>
-<table>
-<thead>
-<tr>
-<th>Release</th>
-<th>End of support</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>5.1</td>
-<td>December 2013</td>
-</tr>
-<tr>
-<td>5.5</td>
-<td>December 2018</td>
-</tr>
-<tr>
-<td>5.6</td>
-<td>February 2021</td>
-</tr>
-<tr>
-<td>5.7</td>
-<td>October 2023</td>
-</tr>
-<tr>
-<td><mark>8.0</mark></td>
-<td>April 2026</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<table>
-<thead>
-<tr>
-<th>Release</th>
-<th>Authentication</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>5.x</td>
-<td>mysql_native_password</td>
-</tr>
-<tr>
-<td>5.6</td>
-<td><span><!-- .element: class="fragment highlight-green" -->sha256_password</span></td>
-</tr>
-<tr>
-<td>8.0</td>
-<td><span><!-- .element: class="fragment highlight-red" -->caching_sha2_password</span></td>
-</tr>
-</tbody>
-</table>
-<p>Note:<br>
-MySQL 5.6以前，密碼加密方式是 <code>mysql_native_password</code>，SHA1算法。如果兩個用戶帳戶使用相同的密碼，加密出來的結果是相同的<br>
-後來MySQL 5.6有 <code>sha256_password</code> 使用多輪SHA256 hash，雖然安全性強，不過因為需要 TLS 或 支援 RSA 的密碼交換來連接到 server，非常耗時，所以後來又推出兩全其美的演算法。<br>
-MySQL 8 才升級，預設身份驗證的插件為<mark>caching_sha2_password</mark></p>
-<hr>
-<p><a href="https://mysqlserverteam.com/mysql-8-0-4-new-default-authentication-plugin-caching_sha2_password/" target="_blank" rel="noopener">caching_sha2_password</a></p>
-<ul>
-<li>首次連接:<br>
-<img src="https://i.imgur.com/eSPDRCN.png" alt=""></li>
-</ul>
-<hr>
-<ul>
-<li>下一次：<br>
-<img src="https://i.imgur.com/OhDSvbG.png" alt=""></li>
-</ul>
-<p>Note:<br>
-使用SHA-256提供更安全的密碼加密，並使用Cache來加速同一用戶的身份驗證過程。<br>
-<a href="https://kknews.cc/code/y3v2j3g.html" target="_blank" rel="noopener">reference</a></p>
-<hr>
-<p>支持 caching_sha2_password 的 PHP 版本</p>
-<div><font size="5">
-<table>
-<thead>
-<tr>
-<th>版本</th>
-<th>no</th>
-<th>support</th>
-<th>no</th>
-<th>no</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>7.1</td>
-<td>7.1.2(0214’17)</td>
-<td>7.1.20(0719’18)</td>
-<td>7.1.23(1009’18)</td>
-<td>no</td>
-</tr>
-<tr>
-<td>7.2</td>
-<td>no</td>
-<td>7.2.8   (0717’18)</td>
-<td>7.2.11 (1009’18)</td>
-<td>7.2.22</td>
-</tr>
-<tr>
-<td>7.3 (0708’19)</td>
-<td>no</td>
-<td>no</td>
-<td>no</td>
-<td>no</td>
-</tr>
-<tr>
-<td>7.4 (support)</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</font>
-</div>
-Note:
-[官方文件：](https://www.php.net/manual/en/mysqli.requirements.php)
-When running a PHP version before 7.1.16, or PHP 7.2 before 7.2.4, set MySQL 8 Server's default password plugin to mysql_native_password. 
-<p><a href="http://ftp.ntu.edu.tw/pub/php/distributions/" target="_blank" rel="noopener">all distributions 有時間</a></p>
-<hr>
-<p>WHY NOT SUPPORT</p>
-<p><a href="https://bugs.php.net/bug.php?id=76651" target="_blank" rel="noopener">Bug #76651(<s>php programmer筆戰</s>)</a><br>
-<img src="https://i.imgur.com/a3kGge1.png" alt="" width="300"></p>
-<p>This new machanism requires <mark>OpenSSL</mark> and <mark>ext/hash</mark> to be available.</p>
-<p>Note:<br>
-Without those statically compiled in (we can’t do proper runtime guessing for C symbols) we can’t use them and have a compile-time decision to make.<br>
-<a href="https://bugs.php.net/bug.php?id=76660" target="_blank" rel="noopener">Bug #76660</a><br>
-PDOException</p>
-<hr>
-<p>On github:</p>
-<p>Per bug #76651 these changes do not appear to work correctly in<br>
-some cases. As no immediate fix seems to be forthcoming, I’m<br>
-reverting these changes.</p>
-<hr>
-<p>修改 /ext/mysqlnd/mysqlnd_auth.c</p>
-<p><a href="https://github.com/php/php-src/commit/03740ef7dffcc80530a89ebde3ccf5464f7f18e6#diff-398af6cde010c06283216edde1709507" target="_blank" rel="noopener">revert 內容 on github：</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Revert all MySQL auth related changes</span><br><span class="line"></span><br><span class="line">Per bug #76651 these changes do not appear to work correctly in</span><br><span class="line">some cases. As no immediate fix seems to be forthcoming, I&#39;m</span><br><span class="line">reverting these changes.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fixed invalid free introduced by d6e81f0 (avoid keeping &quot;invalid&quot; pointer)&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 11507c0.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix mysqlnd build without openssl&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit 6c9db02.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix VC compilation as variable size array is not supported&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit f96df64.</span><br><span class="line"></span><br><span class="line">Revert &quot;Fix MySQL 8 auth&quot;</span><br><span class="line"></span><br><span class="line">This reverts commit d6e81f0.</span><br></pre></td></tr></table></figure>
-<hr>
-<p>如果有興趣了解可以比較，之前升級加密方式改的 code 和最近改的方式差在哪裡<br>
-<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.2.8/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.2.8</a><br>
-<a href="https://raw.githubusercontent.com/php/php-src/PHP-7.4/ext/mysqlnd/mysqlnd_auth.c" target="_blank" rel="noopener">PHP-7.4</a></p>
-<p>Note:<br>
-C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank" rel="noopener"><code>a-&gt;b</code> 的含義是 <code>(*a).b</code></a></p>
-<hr>
-<p>目前處理方式：</p>
-<hr>
-<ol>
-<li>進入 mysql介面後，可以看一下</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;default_authentication_plugin&#39;;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>在 /usr/local/etc/my.cnf 中的[mysqld] 加</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_authentication_plugin&#x3D;mysql_native_password</span><br></pre></td></tr></table></figure>
-<p>Note:<br>
-<a href="https://www.itread01.com/content/1532371255.html" target="_blank" rel="noopener">處理 caching_sha2_password 中文</a></p>
-<hr>
-<p>Thank you！^0^</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/RegularExpression/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="SarahCheng">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vegelephant's IT world">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/10/RegularExpression/" class="post-title-link" itemprop="url">RegularExpression</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-10 16:30:20" itemprop="dateCreated datePublished" datetime="2020-01-10T16:30:20+08:00">2020-01-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-22 16:54:41" itemprop="dateModified" datetime="2020-01-22T16:54:41+08:00">2020-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>Why</h1>
-<ul>
-<li>做過濾或驗證(錯誤,攻擊)</li>
-<li>規範或限制文字的格式</li>
-<li>提高效率</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/01/10/RegularExpression/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1163,14 +1018,14 @@ C語言的<a href="https://farseerfc.me/dot-and-arrow-in-c.html" target="_blank"
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
