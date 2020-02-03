@@ -56,7 +56,7 @@
 <meta property="og:image" content="https://i.imgur.com/sNoMlWf.png">
 <meta property="og:image" content="https://i.imgur.com/Ye8WZmW.png">
 <meta property="article:published_time" content="2020-01-29T07:38:26.000Z">
-<meta property="article:modified_time" content="2020-02-02T09:43:37.452Z">
+<meta property="article:modified_time" content="2020-02-03T04:26:22.097Z">
 <meta property="article:author" content="SarahCheng">
 <meta property="article:tag" content="Github Actions">
 <meta property="article:tag" content="SSH Actions">
@@ -253,7 +253,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-02 17:43:37" itemprop="dateModified" datetime="2020-02-02T17:43:37+08:00">2020-02-02</time>
+                <time title="Modified: 2020-02-03 12:26:22" itemprop="dateModified" datetime="2020-02-03T12:26:22+08:00">2020-02-03</time>
               </span>
 
           
@@ -270,7 +270,7 @@
         <h1>前言</h1>
 <p>讓遠端伺服器( ex: GCE）在本機修改 push 上 github 後，可以自動 git pull 更新。 <a id="more"></a><br>
 本篇實作皆參考<a href="https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets" target="_blank" rel="noopener">官方文件</a><br>
-若還沒使用過 Action 可以先參考<a href="https://yu-hancheng.github.io/2020/01/29/Github-Actions/#more" target="_blank" rel="noopener">這篇</a></p>
+若還沒使用過 Action 可以先參考<a href="https://yu-hancheng.github.io/2020/01/29/Deploy/Github-Actions/" target="_blank" rel="noopener">這篇</a></p>
 <h1>步驟</h1>
 <h2 id="1-開啟一個-GCE"><a class="header-anchor" href="#1-開啟一個-GCE"></a>1. 開啟一個 GCE</h2>
 <h2 id="2-從本機端-ssh-連線到-GCE"><a class="header-anchor" href="#2-從本機端-ssh-連線到-GCE"></a>2. 從本機端 ssh 連線到 GCE</h2>
@@ -297,8 +297,8 @@
 test printing: 印出第一項目寫入的 $HOME/secrets/key<br>
 chom: 更改權限，以符合私鑰權限<br>
 ssh: 連線至遠端並下指令 git pull</p>
-<p>ssh參數可參考<a href="https://yu-hancheng.github.io/2020/01/29/SSH/#more" target="_blank" rel="noopener">這裏</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- name: decrypt</span><br><span class="line">  run: |</span><br><span class="line">    mkdir $HOME&#x2F;secrets</span><br><span class="line">    gpg --quiet --batch --yes --decrypt --passphrase&#x3D;&quot;$PASSPHRASE&quot; \</span><br><span class="line">    --output $HOME&#x2F;secrets&#x2F;key kkey.gpg</span><br><span class="line">  env:</span><br><span class="line">    PASSPHRASE: $&#123;&#123; secrets.PASSPHRASE &#125;&#125;</span><br><span class="line">- name: test printing</span><br><span class="line">  run: cat $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: chmod</span><br><span class="line">  run: chmod 600 $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">- name: ssh</span><br><span class="line">  run: ssh -o StrictHostKeyChecking&#x3D;no -i $HOME&#x2F;secrets&#x2F;key sarahcheng@104.199.244.213 &quot;cd cicd_test&#x2F;;git pull&quot;</span><br></pre></td></tr></table></figure>
+<p>ssh參數可參考<a href="https://yu-hancheng.github.io/2020/01/29/Deploy/SSH/" target="_blank" rel="noopener">這裏</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">name: CI</span><br><span class="line"></span><br><span class="line">on: [push]</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  build:</span><br><span class="line"></span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">    - uses: actions&#x2F;checkout@v2</span><br><span class="line">    - name: Run a one-line script</span><br><span class="line">      run: echo Hello, world!</span><br><span class="line">    - name: decrypt</span><br><span class="line">      run: |</span><br><span class="line">        mkdir $HOME&#x2F;secrets</span><br><span class="line">        gpg --quiet --batch --yes --decrypt --passphrase&#x3D;&quot;$PASSPHRASE&quot; \</span><br><span class="line">        --output $HOME&#x2F;secrets&#x2F;key google_compute_engine.gpg</span><br><span class="line">      env:</span><br><span class="line">        PASSPHRASE: $&#123;&#123; secrets.PASSPHRASE &#125;&#125;</span><br><span class="line">    - name: test key</span><br><span class="line">      run: ls $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">    - name: chmod</span><br><span class="line">      run: chmod 600 $HOME&#x2F;secrets&#x2F;key</span><br><span class="line">    - name: ssh</span><br><span class="line">      run: ssh -o StrictHostKeyChecking&#x3D;no -i $HOME&#x2F;secrets&#x2F;key sarahcheng@35.229.180.75 &quot;c&#x2F;;git pull&quot;  </span><br><span class="line"># cd action_ci 要改成自己的 guthub 專案名稱</span><br></pre></td></tr></table></figure>
 <blockquote></blockquote>
 <h2 id="6-到-github-settings-頁面設定-secrets"><a class="header-anchor" href="#6-到-github-settings-頁面設定-secrets"></a>6. 到 github settings 頁面設定 secrets</h2>
 <p><img src="https://i.imgur.com/Ye8WZmW.png" alt=""></p>
