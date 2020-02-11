@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yu-hancheng.github.io/2020/01/13/PHP/php-mysql-plugin/</loc>
+    
+    <lastmod>2020-02-11T07:14:27.381Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yu-hancheng.github.io/2020/02/02/PHP/FB%20access%20token/</loc>
     
-    <lastmod>2020-02-11T07:11:24.427Z</lastmod>
+    <lastmod>2020-02-11T07:14:26.117Z</lastmod>
     
   </url>
   
@@ -33,13 +40,6 @@
     <loc>http://yu-hancheng.github.io/2020/01/29/Deploy/SSH/</loc>
     
     <lastmod>2020-02-02T09:44:29.154Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yu-hancheng.github.io/2020/01/13/PHP/php-mysql-plugin/</loc>
-    
-    <lastmod>2020-02-02T09:44:20.429Z</lastmod>
     
   </url>
   
